@@ -1,0 +1,499 @@
+import { YearData } from '../types';
+
+export const JOURNAL_DATA: YearData[] = [
+  {
+    year: 2018,
+    chapter: "CHAPTER 01",
+    title: "Awal Mula Cerita",
+    subtitle: "Titik di mana dua garis takdir mulai bersinggungan",
+    song: {
+      title: "First Encounter",
+      fileName: "first-encounter-2018.mp3",
+      artist: "Acoustic Memories",
+      audioUrl: "./audio/2018.mp3",
+      synthTheme: "nostalgic"
+    },
+    photos: [
+      {
+        id: "2018-01",
+        title: "Pertemuan Pertama",
+        date: "Oktober 2018",
+        caption: "Hari di mana tatap mata pertama kali berbicara tanpa kata.",
+        location: "Sudut Kota",
+        imageUrl: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2018-02",
+        title: "Tawa Canggung Pertama",
+        date: "November 2018",
+        caption: "Secangkir kopi yang mendingin karena cerita yang tak kunjung habis.",
+        location: "Kedai Kopi Senja",
+        imageUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Garis Start Sebuah Cerita",
+      authorNote: "Ditulis dengan penuh kehangatan",
+      shortWish: "Tahun di mana namamu mulai menjadi doa yang tak pernah terlewat di setiap malam.",
+      longWish: "Mengingat tahun 2018 selalu membawa senyum tersendiri. Waktu itu kita masih dua orang asing yang saling menerka isi kepala masing-masing. Sophie, cara bicaramu yang tenang dan matamu yang berbinar saat menceritakan hal-hal kecil adalah alasan pertama mengapa aku tahu, perjalanan ini akan menjadi sesuatu yang sangat berharga. Terima kasih telah mengizinkanku melangkah masuk ke dalam duniamu sejak hari itu."
+    },
+    miniGame: {
+      type: "quiz",
+      title: "Kuis Pertemuan Pertama",
+      instructions: "Jawab tiga pertanyaan tentang awal mula perjalanan kita untuk membuka babak berikutnya.",
+      badgeLabel: "BABAK 01 TANTANGAN",
+      quizData: [
+        {
+          question: "Apa kesan pertama yang paling tak terlupakan saat kita pertama kali berbicara?",
+          options: [
+            "Tatapan mata yang hangat dan senyum yang ramah",
+            "Suasana hening yang penuh rasa canggung",
+            "Pembicaraan tentang buku dan musik favorit",
+            "Lelucon sederhana yang membuat tertawa lepas"
+          ],
+          correctIndex: 0,
+          hint: "Ingat kembali bagaimana kita saling menatap saat pertama kali duduk berhadapan."
+        },
+        {
+          question: "Minuman apa yang menemani percakapan panjang kita di awal perkenalan?",
+          options: [
+            "Teh hangat dengan sedikit gula",
+            "Kopi susu hangat dengan busa lembut",
+            "Cokelat panas di sore hari",
+            "Air mineral dingin"
+          ],
+          correctIndex: 1,
+          hint: "Aroma hangat yang menemani obrolan hingga kedai hampir tutup."
+        },
+        {
+          question: "Kapan kita menyadari bahwa obrolan ini bukan sekadar basa-basi?",
+          options: [
+            "Saat kita mulai berbagi cerita masa kecil",
+            "Saat hari kedua kita bertemu",
+            "Saat berjanji untuk saling mengirim kabar setiap pagi",
+            "Saat waktu terasa berlalu begitu cepat tanpa disadari"
+          ],
+          correctIndex: 3,
+          hint: "Perasaan ketika jam dinding bergerak tiga kali lebih cepat dari biasanya."
+        }
+      ]
+    }
+  },
+  {
+    year: 2019,
+    chapter: "CHAPTER 02",
+    title: "Langkah-Langkah Kecil",
+    subtitle: "Belajar memahami ritme dan kebiasaan sederhana",
+    song: {
+      title: "Gentle Rhythm",
+      fileName: "gentle-rhythm-2019.mp3",
+      artist: "Warm Strings",
+      audioUrl: "./audio/2019.mp3",
+      synthTheme: "gentle"
+    },
+    photos: [
+      {
+        id: "2019-01",
+        title: "Perjalanan Singkat",
+        date: "Maret 2019",
+        caption: "Menikmati semilir angin sore di jalanan yang basah setelah hujan.",
+        location: "Taman Kota",
+        imageUrl: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2019-02",
+        title: "Senyum Tulus Sophie",
+        date: "September 2019",
+        caption: "Salah satu foto favorit yang membuktikan kebahagiaan itu sederhana.",
+        location: "Kala Sore",
+        imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Menemukan Irama Bersama",
+      authorNote: "Catatan kebersamaan 2019",
+      shortWish: "Belajar bahwa cinta bukan tentang persamaan yang sempurna, melainkan kesediaan untuk saling melengkapi.",
+      longWish: "Tahun 2019 adalah tahun di mana kita belajar banyak hal tentang satu sama lain. Aku mulai tahu makanan apa yang membuatmu tersenyum, dan lagu apa yang selalu kau putar saat sedang lelah. Kamu selalu punya cara untuk menenangkan hatiku yang sering terburu-buru. Di tahun ini, aku semakin yakin bahwa memiliki Sophie di sisiku adalah anugerah terbesar yang tak pernah kusangka akan datang."
+    },
+    miniGame: {
+      type: "memory-match",
+      title: "Kartu Pasangan Memori",
+      instructions: "Temukan tiga pasang kartu kenangan tahun 2019 untuk membuka tahun berikutnya.",
+      badgeLabel: "BABAK 02 MEMORI",
+      matchData: [
+        { id: 1, label: "Senja Basah", iconName: "CloudSun" },
+        { id: 2, label: "Kopi Favorit", iconName: "Coffee" },
+        { id: 3, label: "Lagu Rahasia", iconName: "Music" }
+      ]
+    }
+  },
+  {
+    year: 2020,
+    chapter: "CHAPTER 03",
+    title: "Dalam Jarak dan Doa",
+    subtitle: "Dunia melambat, namun rasa kita tumbuh semakin tabah",
+    song: {
+      title: "Quiet Patience",
+      fileName: "quiet-patience-2020.mp3",
+      artist: "Solitude Piano",
+      audioUrl: "./audio/2020.mp3",
+      synthTheme: "deep"
+    },
+    photos: [
+      {
+        id: "2020-01",
+        title: "Panggilan Layar Kaca",
+        date: "Mei 2020",
+        caption: "Meski terpisah dinding ruang, suaramu selalu menjadi penenang di hari yang panjang.",
+        location: "Ruang Maya",
+        imageUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2020-02",
+        title: "Surat dan Pesan Panjang",
+        date: "Oktober 2020",
+        caption: "Ketika kata-kata tertulis menjadi jembatan terkuat antara dua hati.",
+        location: "Meja Belajar",
+        imageUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Keteguhan Di Tengah Badai",
+      authorNote: "Pesan ketabahan 2020",
+      shortWish: "Bahkan saat dunia diliputi ketidakpastian, hadirmu adalah satu-satunya hal yang pasti kurindukan.",
+      longWish: "Tahun 2020 menguji banyak orang, termasuk kita. Jarak yang tercipta dan keterbatasan pertemuan membuat setiap kabar yang datang terasa seperti oasis. Tapi di tengah keheningan tahun itu, ketulusanmu justru terlihat paling terang. Terima kasih sudah tetap bertahan, tetap mendengarkan, dan tetap menjadi tempat berteduh di saat semuanya terasa berat."
+    },
+    miniGame: {
+      type: "word-unscramble",
+      title: "Kata Kunci Kesabaran",
+      instructions: "Susun huruf-huruf acak berikut menjadi satu kata yang menggambarkan perjalanan kita di tahun 2020.",
+      badgeLabel: "BABAK 03 KATA KUNCI",
+      wordData: {
+        letters: ["T", "E", "T", "A", "P", "S", "E", "T", "I", "A"],
+        answer: "TETAPSETIA",
+        hint: "Dua kata tanpa spasi: Sikap hati yang tak goyah meski waktu dan jarak menguji."
+      }
+    }
+  },
+  {
+    year: 2021,
+    chapter: "CHAPTER 04",
+    title: "Kembali Bertemu Pandang",
+    subtitle: "Rasa syukur yang berlipat ganda atas setiap pertemuan",
+    song: {
+      title: "Reunion Waltz",
+      fileName: "reunion-waltz-2021.mp3",
+      artist: "Gentle Harmony",
+      audioUrl: "./audio/2021.mp3",
+      synthTheme: "warm"
+    },
+    photos: [
+      {
+        id: "2021-01",
+        title: "Pertemuan Selepas Penantian",
+        date: "April 2021",
+        caption: "Menghirup kembali udara yang sama, merasakan debar yang tak pernah hilang.",
+        location: "Stasiun Tua",
+        imageUrl: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2021-02",
+        title: "Cahaya Senja Bersama",
+        date: "Desember 2021",
+        caption: "Langit jingga yang menyaksikan tawa kita kembali utuh.",
+        location: "Tepi Dermaga",
+        imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Syukur Atas Setiap Detik",
+      authorNote: "Babak syukur 2021",
+      shortWish: "Tidak ada yang lebih melegakan daripada menyadari bahwa orang yang kita sayangi tetap berada di samping kita.",
+      longWish: "Tahun 2021 mengajarkan kita untuk tidak menyia-nyiakan momen sekecil apapun. Setiap kali bisa duduk di sampingmu, melihat tawamu secara langsung, dan mendengar suaramu tanpa terhalang sinyal, aku selalu mengucap syukur dalam hati. Sophie, kamu adalah bukti bahwa kesabaran selalu bermuara pada pelukan yang hangat."
+    },
+    miniGame: {
+      type: "quiz",
+      title: "Trivia Momen Reuni",
+      instructions: "Uji ingatan tentang momen-momen manis yang kembali kita rajut di tahun 2021.",
+      badgeLabel: "BABAK 04 TRIVIA",
+      quizData: [
+        {
+          question: "Hal apa yang paling kita rindukan saat akhirnya bisa bertemu kembali secara langsung?",
+          options: [
+            "Berjalan kaki santai tanpa terburu-buru",
+            "Mendengarkan cerita keseharian sambil bertatap muka",
+            "Mencoba makanan baru yang lama diidamkan",
+            "Semua hal di atas terasa sama berharganya"
+          ],
+          correctIndex: 3,
+          hint: "Setiap detil kecil terasa luar biasa setelah penantian panjang."
+        },
+        {
+          question: "Apa arti kehadiran Sophie bagi hidupku di fase tahun ini?",
+          options: [
+            "Rumah tempat pulang yang selalu teduh",
+            "Penyemangat di setiap langkah",
+            "Sahabat terbaik untuk bercerita apa adanya",
+            "Ketiganya berpadu sempurna"
+          ],
+          correctIndex: 3,
+          hint: "Tidak ada pilihan yang salah, semuanya adalah kebenaran."
+        }
+      ]
+    }
+  },
+  {
+    year: 2022,
+    chapter: "CHAPTER 05",
+    title: "Kedewasaan dan Kompromi",
+    subtitle: "Tumbuh bersama bukan berarti tak pernah berbeda, melainkan saling memahami",
+    song: {
+      title: "Maturity & Grace",
+      fileName: "maturity-grace-2022.mp3",
+      artist: "Warm Cello & Keys",
+      audioUrl: "./audio/2022.mp3",
+      synthTheme: "dreamy"
+    },
+    photos: [
+      {
+        id: "2022-01",
+        title: "Perjalanan Baru",
+        date: "Juli 2022",
+        caption: "Melangkah bersama menatap masa depan dengan pikiran yang lebih lapang.",
+        location: "Kaki Bukit",
+        imageUrl: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2022-02",
+        title: "Momen Refleksi",
+        date: "November 2022",
+        caption: "Di sudut jendela sore, merencanakan mimpi-mimpi yang mulai kita rangkai.",
+        location: "Balkon Rumah",
+        imageUrl: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Tumbuh dan Melangkah Lebih Jauh",
+      authorNote: "Renungan cinta 2022",
+      shortWish: "Cinta kita menjadi lebih tenang, lebih dalam, dan tidak lagi memerlukan pembuktian berlebihan.",
+      longWish: "Di tahun 2022, aku melihat Sophie yang semakin dewasa, anggun, dan bijaksana dalam menyikapi setiap persoalan hidup. Menemanimu berproses, melihat caramu berjuang untuk impianmu, membuat rasa kagumku berlipat ganda. Kita belajar memaafkan lebih cepat, mendengar lebih sabar, dan saling menguatkan saat salah satu dari kita sedang ragu."
+    },
+    miniGame: {
+      type: "cipher-code",
+      title: "Kombinasi Tanggal Spesial",
+      instructions: "Masukkan 4 angka kode tanggal lahir Sophie (format tanggal DDMM atau angka 2022) untuk membuka kunci.",
+      badgeLabel: "BABAK 05 KODE KUNCI",
+      cipherData: {
+        targetCode: "2525",
+        prompt: "Dua angka sakral: Menuju usia perak ke-25 kita mengulang angka ini dua kali (Ketik: 2525)",
+        hint: "Angka tonggak usia ke-25 Sophie, ketik: 2525"
+      }
+    }
+  },
+  {
+    year: 2023,
+    chapter: "CHAPTER 06",
+    title: "Harmoni Sehari-hari",
+    subtitle: "Menemukan keindahan luar biasa di dalam rutinitas yang sederhana",
+    song: {
+      title: "Everyday Serenade",
+      fileName: "everyday-serenade-2023.mp3",
+      artist: "Melodic Echoes",
+      audioUrl: "./audio/2023.mp3",
+      synthTheme: "hopeful"
+    },
+    photos: [
+      {
+        id: "2023-01",
+        title: "Dapur dan Aroma Masakan",
+        date: "Februari 2023",
+        caption: "Eksperimen masakan kecil yang berakhir dengan tawa renyah berdua.",
+        location: "Dapur Hangat",
+        imageUrl: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2023-02",
+        title: "Helaan Napas Lega",
+        date: "Agustus 2023",
+        caption: "Setelah seharian lelah dengan rutinitas, bahumu selalu menjadi sandaran terbaik.",
+        location: "Sofa Ruang Tengah",
+        imageUrl: "https://images.unsplash.com/photo-1506869648495-4331e9c56fa9?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Rumah Di Dalam Manusia",
+      authorNote: "Dedikasi ketenangan 2023",
+      shortWish: "Bukan tempat yang membuat sebuah rumah terasa nyaman, melainkan dengan siapa kita pulang.",
+      longWish: "Tahun 2023 membuktikan bahwa hal-hal paling romantis bukanlah kejutan mewah yang sesekali, melainkan kesetiaan pada rutinitas harian. Menyiapkan sarapan bersama, obrolan sebelum tidur tentang hal-hal sepele, dan tatapan saling memahami tanpa perlu penjelasan panjang. Bersamamu, hal-hal biasa berubah menjadi luar biasa."
+    },
+    miniGame: {
+      type: "memory-match",
+      title: "Harmoni Momen Favorit",
+      instructions: "Cocokkan pasangan simbol kebiasaan manis kita di tahun 2023.",
+      badgeLabel: "BABAK 06 HARMONI",
+      matchData: [
+        { id: 1, label: "Sarapan Pagi", iconName: "Utensils" },
+        { id: 2, label: "Lentera Malam", iconName: "Lamp" },
+        { id: 3, label: "Buku Harian", iconName: "BookOpen" }
+      ]
+    }
+  },
+  {
+    year: 2024,
+    chapter: "CHAPTER 07",
+    title: "Mengukir Jejak Bersama",
+    subtitle: "Melihat impian-impian masa lalu yang satu per satu mewujud nyata",
+    song: {
+      title: "Milestone Journey",
+      fileName: "milestone-journey-2024.mp3",
+      artist: "Bright Horizon",
+      audioUrl: "./audio/2024.mp3",
+      synthTheme: "joyful"
+    },
+    photos: [
+      {
+        id: "2024-01",
+        title: "Pencapaian Baru",
+        date: "Mei 2024",
+        caption: "Melihat kerja keras dan dedikasimu membuahkan hasil yang membanggakan.",
+        location: "Panggung Syukur",
+        imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2024-02",
+        title: "Di Bawah Bintang-Bintang",
+        date: "Desember 2024",
+        caption: "Menatap langit malam dan bersyukur telah sampai sejauh ini tanpa pernah melepaskan genggaman.",
+        location: "Puncak Malam",
+        imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Kebanggaan Yang Tak Terhingga",
+      authorNote: "Rasa bangga 2024",
+      shortWish: "Melihatmu bersinar adalah salah satu kebahagiaan terbesar dalam hidupku.",
+      longWish: "Tahun 2024 adalah tahun pembuktian. Sophie membuktikan betapa tangguh dan berdedikasinya dirimu dalam mengejar cita-cita. Saat kau lelah, kau tetap tersenyum. Saat ada rintangan, kau menghadapinya dengan kepala tegak. Aku sangat bangga menjadi orang yang bisa menyaksikan semua pertumbuhan ini dari barisan terdepan."
+    },
+    miniGame: {
+      type: "word-unscramble",
+      title: "Rangkaian Janji Suci",
+      instructions: "Susun huruf acak berikut untuk merangkai satu kata komitmen kita.",
+      badgeLabel: "BABAK 07 JANJI",
+      wordData: {
+        letters: ["S", "E", "L", "A", "M", "A", "N", "Y", "A"],
+        answer: "SELAMANYA",
+        hint: "Kata penutup dari setiap doa tulus tentang perjalanan cinta."
+      }
+    }
+  },
+  {
+    year: 2025,
+    chapter: "CHAPTER 08",
+    title: "Ambang Seperempat Abad",
+    subtitle: "Mempersiapkan hati menyongsong usia penuh kematangan dan karunia",
+    song: {
+      title: "Quarter Century Dawn",
+      fileName: "quarter-century-dawn-2025.mp3",
+      artist: "Subtle Radiance",
+      audioUrl: "./audio/2025.mp3",
+      synthTheme: "radiant"
+    },
+    photos: [
+      {
+        id: "2025-01",
+        title: "Senyum Kedewasaan",
+        date: "Maret 2025",
+        caption: "Pancaran ketenangan seorang wanita yang tahu apa yang ia tuju.",
+        location: "Kala Fajar",
+        imageUrl: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2025-02",
+        title: "Perjalanan Menuju 25",
+        date: "September 2025",
+        caption: "Setiap langkah yang terlewati adalah bukti bahwa cinta ini berakar kuat.",
+        location: "Jalan Setapak",
+        imageUrl: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Menyongsong Babak Perak",
+      authorNote: "Antisipasi menuju 25",
+      shortWish: "Semakin bertambah usiamu, semakin jelas bahwa hatimu adalah tempat terbaik di dunia.",
+      longWish: "Tahun 2025 menjadi jembatan menuju perayaan besar. Menatap ke belakang dari tahun 2018 hingga detik ini, rasanya seperti membaca novel yang setiap lembarnya ditulis dengan cinta, pengorbanan, dan tawa. Sophie Grisella Olivia, kau telah tumbuh menjadi sosok yang begitu luar biasa. Tidak ada hal yang lebih kurindukan selain terus mendampingimu di setiap babak selanjutnya."
+    },
+    miniGame: {
+      type: "quiz",
+      title: "Refleksi Perjalanan 8 Tahun",
+      instructions: "Selesaikan pertanyaan refleksi ini untuk membuka babak puncak tahun 2026.",
+      badgeLabel: "BABAK 08 REFLEKSI",
+      quizData: [
+        {
+          question: "Dari tahun 2018 hingga 2025, apa harta terindah yang kita kumpulkan bersama?",
+          options: [
+            "Kenangan dan kepercayaan yang semakin tak tergoyahkan",
+            "Ribuan foto dan cerita di setiap sudut kota",
+            "Ketabahan menghadapi segala musim kehidupan",
+            "Seluruh perjalanan ini sebagai satu kesatuan yang utuh"
+          ],
+          correctIndex: 3,
+          hint: "Setiap detik yang kita lalui bersama adalah harta yang tak ternilai harganya."
+        }
+      ]
+    }
+  },
+  {
+    year: 2026,
+    chapter: "CHAPTER 09 - THE FINALE",
+    title: "Sophie Grisella Olivia 25th",
+    subtitle: "Selamat Ulang Tahun Ke-25, Jiwa Terindah yang Selalu Kucintai",
+    song: {
+      title: "Sophie 25th Anthem",
+      fileName: "sophie-25th-anthem-2026.mp3",
+      artist: "Symphony of Grace",
+      audioUrl: "./audio/2026.mp3",
+      synthTheme: "celebration"
+    },
+    photos: [
+      {
+        id: "2026-01",
+        title: "Sang Bintang Hari Ini",
+        date: "2026",
+        caption: "Sophie Grisella Olivia di usia ke-25: Anggun, penuh cinta, dan selalu memesona.",
+        location: "Hari Istimewa",
+        imageUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "2026-02",
+        title: "Perjalanan Yang Abadi",
+        date: "Masa Kini & Masa Depan",
+        caption: "Bukan akhir dari jurnal, melainkan awal dari lembaran baru yang lebih indah.",
+        location: "Masa Depan Bersama",
+        imageUrl: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    wish: {
+      themeTitle: "Surat Kasih Untuk Usia Ke-25",
+      authorNote: "Dari lubuk hati yang terdalam",
+      shortWish: "Selamat ulang tahun ke-25, Sophie Grisella Olivia. Semoga dunia selalu bersikap lembut padamu seperti caramu memperlakukan hatiku.",
+      longWish: "Sophie sayang, 25 tahun adalah tonggak yang sangat indah. Di usiamu yang seperempat abad ini, aku ingin kau tahu betapa berartinya dirimu bagi banyak orang, dan terutama bagiku. Terima kasih sudah lahir ke dunia ini. Terima kasih sudah memilih untuk terus berjalan bersamaku sejak 2018. Doaku selalu sama: semoga kesehatan, ketenangan batin, kebahagiaan yang melimpah, dan pencapaian impianmu selalu menyertai setiap hembusan napasmu. Apapun musim yang akan kita lalui nanti, tanganku akan selalu ada untuk kau genggam. Selamat ulang tahun ke-25, Sophie."
+    },
+    miniGame: {
+      type: "final-celebration",
+      title: "Kapsul Kenangan & Doa 25 Tahun",
+      instructions: "Buka kapsul waktu 25 tahun untuk meresmikan jurnal kenangan abadi ini.",
+      badgeLabel: "BABAK PUNCAK",
+      finalData: {
+        title: "Sophie Grisella Olivia 25th Milestone",
+        dedication: "Didedikasikan untuk wanita paling istimewa",
+        letterLines: [
+          "Delapan tahun perjalanan telah terangkum dalam lembaran ini.",
+          "Dari perkenalan malu-malu di tahun 2018, hingga kedewasaan penuh rahmat di tahun 2026.",
+          "Setiap goresan foto, setiap lagu yang mengalun, adalah saksi bisu kasih sayang yang tak pernah luntur.",
+          "Semoga usia ke-25 ini menjadi awal dari babak kehidupan yang paling membahagiakan untukmu.",
+          "Selamat Ulang Tahun, Sophie Grisella Olivia."
+        ]
+      }
+    }
+  }
+];

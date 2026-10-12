@@ -1,0 +1,287 @@
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { Eye, MapPin, Calendar, Sparkles } from 'lucide-react';
+import { MemoryPhoto } from '../types';
+
+interface ScratchCardProps {
+  photo: MemoryPhoto;
+  cardIndex: number;
+  onPhotoCleared?: (id: string) => void;
+}
+
+export const ScratchCard: React.FC<ScratchCardProps> = ({
+  photo,
+  cardIndex,
+  onPhotoCleared,
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isCleared, setIsCleared] = useState(false);
+  const [scratchPercent, setScratchPercent] = useState(0);
+  const [isScratching, setIsScratching] = useState(false);
+  const [isFullViewOpen, setIsFullViewOpen] = useState(false);
+  const lastPosRef = useRef<{ x: number; y: number } | null>(null);
+
+  // Initialize canvas overlay
+  const initCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const rect = container.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.scale(dpr, dpr);
+
+    // Muted Bronze / Soft Gold background
+    ctx.fillStyle = '#C8B29B';
+    ctx.fillRect(0, 0, rect.width, rect.height);
+
+    // Add subtle luxury speckled / brush texture
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    for (let i = 0; i < 400; i++) {
+      const rx = Math.random() * rect.width;
+      const ry = Math.random() * rect.height;
+      const rSize = Math.random() * 2 + 1;
+      ctx.fillRect(rx, ry, rSize, rSize);
+    }
+
+    // Editorial text on overlay
+    ctx.fillStyle = '#2D2926';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.font = '600 10px "Plus Jakarta Sans", sans-serif';
+    ctx.letterSpacing = '0.2em';
+    ctx.fillText('SCRATCH TO UNCOVER', rect.width / 2, rect.height / 2 - 12);
+
+    ctx.fillStyle = 'rgba(45, 41, 38, 0.6)';
+    ctx.font = '400 11px "Cormorant Garamond", serif';
+    ctx.fillText(`MEMORI #${cardIndex + 1}`, rect.width / 2, rect.height / 2 + 10);
+
+    // Subtle decorative border inside canvas
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(12, 12, rect.width - 24, rect.height - 24);
+  }, [cardIndex]);
+
+  useEffect(() => {
+    if (!isCleared) {
+      initCanvas();
+    }
+  }, [initCanvas, isCleared]);
+
+  // Calculate scratched area percentage (> 50% triggers auto-clear)
+  const checkScratchPercentage = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || isCleared) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Sample a 20x20 grid for high performance
+    const stepX = Math.floor(width / 20);
+    const stepY = Math.floor(height / 20);
+    const imgData = ctx.getImageData(0, 0, width, height);
+    const data = imgData.data;
+
+    let transparentPixels = 0;
+    let totalSamples = 0;
+
+    for (let y = stepY / 2; y < height; y += stepY) {
+      for (let x = stepX / 2; x < width; x += stepX) {
+        const index = (Math.floor(y) * width + Math.floor(x)) * 4;
+        const alpha = data[index + 3];
+        if (alpha < 64) {
+          transparentPixels++;
+        }
+        totalSamples++;
+      }
+    }
+
+    const percent = Math.round((transparentPixels / totalSamples) * 100);
+    setScratchPercent(percent);
+
+    if (percent >= 50 && !isCleared) {
+      setIsCleared(true);
+      onPhotoCleared?.(photo.id);
+    }
+  };
+
+  const scratch = (clientX: number, clientY: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas || isCleared) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const x = (clientX - rect.left) * dpr;
+    const y = (clientY - rect.top) * dpr;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.lineWidth = 42 * dpr;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (lastPosRef.current) {
+      ctx.beginPath();
+      ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, 22 * dpr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    lastPosRef.current = { x, y };
+  };
+
+  // Touch & Pointer event handlers
+  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (isCleared) return;
+    setIsScratching(true);
+    lastPosRef.current = null;
+    scratch(e.clientX, e.clientY);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!isScratching || isCleared) return;
+    scratch(e.clientX, e.clientY);
+    checkScratchPercentage();
+  };
+
+  const handlePointerUp = () => {
+    setIsScratching(false);
+    lastPosRef.current = null;
+    checkScratchPercentage();
+  };
+
+  return (
+    <>
+      <div className="bg-cream-100 rounded-card p-4 border border-cream-200/80 shadow-soft transition-all duration-300">
+        
+        {/* Card Header Tag */}
+        <div className="flex items-center justify-between mb-3 text-charcoal-muted">
+          <div className="flex items-center gap-1.5 text-[11px] font-mono">
+            <Calendar size={13} strokeWidth={1.5} className="text-rose-accent" />
+            <span>{photo.date}</span>
+          </div>
+
+          {photo.location && (
+            <div className="flex items-center gap-1 text-[11px] text-charcoal-subtle">
+              <MapPin size={12} strokeWidth={1.5} />
+              <span>{photo.location}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Scratch Area Container */}
+        <div
+          ref={containerRef}
+          className="relative w-full aspect-[4/3] rounded-inner overflow-hidden bg-cream-50 select-none shadow-inner"
+        >
+          {/* Base Photo Image */}
+          <img
+            src={photo.imageUrl}
+            alt={photo.title}
+            loading="lazy"
+            className="w-full h-full object-cover select-none transition-transform duration-700 hover:scale-105"
+          />
+
+          {/* Canvas Scratch Overlay */}
+          <canvas
+            ref={canvasRef}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            className={`scratch-canvas absolute inset-0 w-full h-full cursor-crosshair transition-opacity duration-700 ease-out ${
+              isCleared ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          />
+
+          {/* Subtle Scratch progress helper indicator (fades when cleared) */}
+          {!isCleared && scratchPercent > 5 && (
+            <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-charcoal/70 text-white text-[9px] font-mono tracking-wider backdrop-blur-xs pointer-events-none transition-all">
+              {scratchPercent}%
+            </div>
+          )}
+
+          {/* Cleared Reveal Badge & View button */}
+          {isCleared && (
+            <button
+              onClick={() => setIsFullViewOpen(true)}
+              aria-label="Lihat foto penuh"
+              className="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-cream-50/90 hover:bg-cream-100 text-charcoal text-[10px] font-medium tracking-wide flex items-center gap-1 shadow-sm backdrop-blur-xs transition-colors cursor-pointer"
+            >
+              <Eye size={12} strokeWidth={1.5} />
+              <span>LIHAT</span>
+            </button>
+          )}
+        </div>
+
+        {/* Caption & Metadata */}
+        <div className="mt-3.5">
+          <div className="flex items-center justify-between">
+            <h2 className="font-serif text-lg font-medium text-charcoal">
+              {photo.title}
+            </h2>
+            {isCleared && (
+              <span className="text-[10px] uppercase tracking-widest text-rose-hover font-semibold flex items-center gap-1">
+                <Sparkles size={11} strokeWidth={1.5} />
+                TERBUKA
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-charcoal-muted mt-1 leading-relaxed font-normal">
+            {photo.caption}
+          </p>
+        </div>
+      </div>
+
+      {/* Full Photo Modal */}
+      {isFullViewOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setIsFullViewOpen(false)}
+        >
+          <div 
+            className="bg-cream-50 rounded-card p-4 max-w-[420px] w-full max-h-[90dvh] overflow-y-auto shadow-float text-charcoal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative rounded-inner overflow-hidden mb-3">
+              <img
+                src={photo.imageUrl}
+                alt={photo.title}
+                className="w-full max-h-[60dvh] object-contain bg-charcoal/5"
+              />
+            </div>
+            <div className="flex items-center justify-between text-xs text-charcoal-muted mb-1 font-mono">
+              <span>{photo.date}</span>
+              {photo.location && <span>{photo.location}</span>}
+            </div>
+            <h3 className="font-serif text-xl font-medium text-charcoal">{photo.title}</h3>
+            <p className="text-xs text-charcoal-muted mt-1.5 leading-relaxed">{photo.caption}</p>
+            <button
+              onClick={() => setIsFullViewOpen(false)}
+              className="w-full mt-4 py-2.5 rounded-xl bg-cream-200/60 hover:bg-cream-200 text-charcoal text-xs font-medium tracking-wider uppercase transition-colors cursor-pointer"
+            >
+              TUTUP
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};

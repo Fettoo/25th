@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-cream-bg: #FDFBF7;
+    --color-cream-card: #F7EBE1;
+    --color-rose-accent: #D8A7B1;
+    --color-bronze-overlay: #C8B29B;
+    --color-charcoal: #2D2926;
+  }
+
+  html {
+    background-color: var(--color-cream-bg);
+    color: var(--color-charcoal);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100dvh;
+    background-color: var(--color-cream-bg);
+  }
+
+  /* Custom scrollbar for horizontal year nav */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Editorial subtle paper grain texture or soft shimmer */
+.paper-grain {
+  background-color: #FDFBF7;
+  background-image: radial-gradient(#EADBCE 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+/* Touch action prevent scroll while scratching */
+.scratch-canvas {
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
