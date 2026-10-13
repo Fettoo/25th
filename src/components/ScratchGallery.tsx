@@ -17,12 +17,12 @@ export const ScratchGallery: React.FC<ScratchGalleryProps> = ({ photos, year }) 
             GALERI KENANGAN
           </span>
           <h2 className="font-serif text-lg font-medium text-charcoal">
-            Foto Tersembunyi
+            Foto & Video Tersembunyi
           </h2>
         </div>
         <div className="flex items-center gap-1 text-[11px] text-charcoal-muted font-mono bg-cream-100 px-2.5 py-1 rounded-full border border-cream-200">
           <Sparkles size={11} strokeWidth={1.5} className="text-rose-accent" />
-          <span>{photos.length} FOTO</span>
+          <span>{photos.length} MEMORI</span>
         </div>
       </div>
 
@@ -38,4 +38,3 @@ export const ScratchGallery: React.FC<ScratchGalleryProps> = ({ photos, year }) 
     </section>
   );
 };
-

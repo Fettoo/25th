@@ -39,10 +39,6 @@ export const FooterCredits: React.FC<FooterCreditsProps> = ({
           <span>RESET PROGRES</span>
         </button>
       </div>
-
-      <p className="text-[10px] text-charcoal-subtle/70 mt-3 font-mono">
-        DIRANCANG UNTUK PWA & GITHUB PAGES • MOBILE-FIRST
-      </p>
     </footer>
   );
 };

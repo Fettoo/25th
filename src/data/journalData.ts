@@ -70,7 +70,7 @@ export async function saveJournalData(data: YearData[]): Promise<{ savedToDisk: 
  */
 export async function uploadMediaAsset(
   file: File, 
-  mediaType: 'photo' | 'audio'
+  mediaType: 'photo' | 'video' | 'audio'
 ): Promise<{ url: string; fileName: string; isLocalFile: boolean }> {
   // Convert to Base64
   const base64Data = await new Promise<string>((resolve, reject) => {

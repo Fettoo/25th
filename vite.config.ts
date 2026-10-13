@@ -48,7 +48,7 @@ function journalStudioPlugin(): Plugin {
               const cleanBase64 = base64Data.replace(/^data:[^;]+;base64,/, '');
               const buffer = Buffer.from(cleanBase64, 'base64');
 
-              const subfolder = mediaType === 'audio' ? 'audio' : 'photos';
+              const subfolder = mediaType === 'audio' ? 'audio' : (mediaType === 'video' ? 'videos' : 'photos');
               const targetDir = path.resolve(__dirname, 'public', subfolder);
               if (!fs.existsSync(targetDir)) {
                 fs.mkdirSync(targetDir, { recursive: true });

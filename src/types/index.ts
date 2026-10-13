@@ -1,9 +1,12 @@
+export type MediaType = 'image' | 'video';
+
 export interface MemoryPhoto {
   id: string;
   title: string;
   date: string;
   caption: string;
   imageUrl: string;
+  mediaType?: MediaType;
   location?: string;
 }
 
@@ -64,7 +67,7 @@ export interface SongTrack {
   fileName: string;
   artist: string;
   audioUrl: string;
-  synthTheme: 'nostalgic' | 'dreamy' | 'gentle' | 'warm' | 'hopeful' | 'deep' | 'joyful' | 'radiant' | 'celebration';
+  synthTheme: 'nostalgic' | 'gentle' | 'deep' | 'warm' | 'hopeful' | 'joyful' | 'radiant' | 'celebration';
 }
 
 export interface YearData {
@@ -77,4 +80,3 @@ export interface YearData {
   wish: YearlyWish;
   miniGame: YearMiniGame;
 }
-

@@ -16,7 +16,8 @@ import {
   CheckCircle2, 
   AlertCircle,
   FileText,
-  Eye
+  Eye,
+  Film
 } from 'lucide-react';
 import { YearData, MemoryPhoto, SongTrack } from '../types/index';
 import { 
@@ -95,31 +96,36 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
     }
   };
 
-  // Upload Photo handler
-  const handleUploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>, photoIndex?: number) => {
+  // Upload Photo or Video handler
+  const handleUploadMedia = async (e: React.ChangeEvent<HTMLInputElement>, photoIndex?: number) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const isVideoFile = file.type.startsWith('video/') || Boolean(file.name.match(/\.(mp4|webm|ogg|mov)$/i));
+    const targetMediaType = isVideoFile ? 'video' : 'photo';
+
     try {
       setSaveStatus({ message: `Sedang mengunggah ${file.name}...`, type: 'info' });
-      const uploadRes = await uploadMediaAsset(file, 'photo');
+      const uploadRes = await uploadMediaAsset(file, targetMediaType);
 
       updateCurrentYear(year => {
         const photos = [...year.photos];
         if (photoIndex !== undefined && photos[photoIndex]) {
           photos[photoIndex] = {
             ...photos[photoIndex],
-            imageUrl: uploadRes.url
+            imageUrl: uploadRes.url,
+            mediaType: isVideoFile ? 'video' : 'image'
           };
         } else {
-          // Add new photo
+          // Add new photo or video
           const newPhoto: MemoryPhoto = {
             id: `${year.year}-${String(photos.length + 1).padStart(2, '0')}`,
             title: file.name.replace(/\.[^/.]+$/, ''),
             date: `Tahun ${year.year}`,
             caption: 'Kenangan manis yang terekam indah.',
             location: 'Lokasi Kenangan',
-            imageUrl: uploadRes.url
+            imageUrl: uploadRes.url,
+            mediaType: isVideoFile ? 'video' : 'image'
           };
           photos.push(newPhoto);
         }
@@ -128,12 +134,12 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
 
       setSaveStatus({
         message: uploadRes.isLocalFile 
-          ? `Foto ${file.name} berhasil disimpan ke public/photos` 
-          : `Foto ${file.name} berhasil dimuat sebagai data gambar`,
+          ? `${isVideoFile ? 'Video' : 'Foto'} ${file.name} berhasil disimpan ke public/${isVideoFile ? 'videos' : 'photos'}` 
+          : `${isVideoFile ? 'Video' : 'Foto'} ${file.name} berhasil dimuat sebagai data media`,
         type: 'success'
       });
     } catch {
-      setSaveStatus({ message: 'Gagal mengunggah foto. Silakan coba lagi.', type: 'error' });
+      setSaveStatus({ message: `Gagal mengunggah ${isVideoFile ? 'video' : 'foto'}. Silakan coba lagi.`, type: 'error' });
     }
   };
 
@@ -384,123 +390,156 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                 </button>
               </div>
 
-              {currentYear.photos.map((photo, pIdx) => (
-                <div key={photo.id || pIdx} className="p-3.5 rounded-2xl bg-cream-100/70 border border-cream-200 space-y-3">
-                  <div className="flex items-start gap-3">
-                    {/* Thumbnail preview */}
-                    <div className="w-20 h-20 rounded-xl overflow-hidden bg-cream-200 flex-shrink-0 relative border border-cream-200">
-                      <img 
-                        src={photo.imageUrl} 
-                        alt={photo.title}
-                        className="w-full h-full object-cover" 
-                      />
-                    </div>
+              {currentYear.photos.map((photo, pIdx) => {
+                const isItemVideo = photo.mediaType === 'video' ||
+                  Boolean(photo.imageUrl && photo.imageUrl.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) ||
+                  Boolean(photo.imageUrl && photo.imageUrl.startsWith('data:video/'));
 
-                    <div className="flex-1 space-y-2 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <input
-                          type="text"
-                          value={photo.title}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            updateCurrentYear(y => {
-                              const ph = [...y.photos];
-                              ph[pIdx].title = val;
-                              return { ...y, photos: ph };
-                            });
-                          }}
-                          placeholder="Judul Foto"
-                          className="font-serif text-sm font-medium bg-white px-2 py-1 rounded-lg border border-cream-200 w-full"
-                        />
-                        <button
-                          onClick={() => handleRemovePhoto(pIdx)}
-                          className="text-rose-hover hover:text-rose-700 p-1 cursor-pointer"
-                          title="Hapus foto ini"
-                        >
-                          <Trash2 size={15} strokeWidth={1.5} />
-                        </button>
+                return (
+                  <div key={photo.id || pIdx} className="p-3.5 rounded-2xl bg-cream-100/70 border border-cream-200 space-y-3">
+                    <div className="flex items-start gap-3">
+                      {/* Thumbnail preview */}
+                      <div className="w-20 h-20 rounded-xl overflow-hidden bg-cream-200 flex-shrink-0 relative border border-cream-200 flex items-center justify-center">
+                        {isItemVideo ? (
+                          <video 
+                            src={photo.imageUrl} 
+                            className="w-full h-full object-cover" 
+                            muted 
+                          />
+                        ) : (
+                          <img 
+                            src={photo.imageUrl} 
+                            alt={photo.title}
+                            className="w-full h-full object-cover" 
+                          />
+                        )}
+                        <span className="absolute bottom-1 right-1 text-[9px] font-mono uppercase bg-charcoal/70 text-white px-1 py-0.5 rounded flex items-center gap-0.5">
+                          {isItemVideo ? <Film size={9} strokeWidth={1.5} /> : <ImageIcon size={9} strokeWidth={1.5} />}
+                          <span>{isItemVideo ? 'VID' : 'IMG'}</span>
+                        </span>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <input
-                          type="text"
-                          value={photo.date}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            updateCurrentYear(y => {
-                              const ph = [...y.photos];
-                              ph[pIdx].date = val;
-                              return { ...y, photos: ph };
-                            });
-                          }}
-                          placeholder="Bulan / Tanggal"
-                          className="bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px] font-mono"
-                        />
-                        <input
-                          type="text"
-                          value={photo.location || ''}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            updateCurrentYear(y => {
-                              const ph = [...y.photos];
-                              ph[pIdx].location = val;
-                              return { ...y, photos: ph };
-                            });
-                          }}
-                          placeholder="Lokasi"
-                          className="bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px]"
-                        />
+                      <div className="flex-1 space-y-2 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <input
+                            type="text"
+                            value={photo.title}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => {
+                                const ph = [...y.photos];
+                                ph[pIdx].title = val;
+                                return { ...y, photos: ph };
+                              });
+                            }}
+                            placeholder="Judul Media"
+                            className="font-serif text-sm font-medium bg-white px-2 py-1 rounded-lg border border-cream-200 w-full"
+                          />
+                          <button
+                            onClick={() => handleRemovePhoto(pIdx)}
+                            className="text-rose-hover hover:text-rose-700 p-1 cursor-pointer"
+                            title="Hapus media ini"
+                          >
+                            <Trash2 size={15} strokeWidth={1.5} />
+                          </button>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-2 text-xs">
+                          <input
+                            type="text"
+                            value={photo.date}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => {
+                                const ph = [...y.photos];
+                                ph[pIdx].date = val;
+                                return { ...y, photos: ph };
+                              });
+                            }}
+                            placeholder="Bulan / Tanggal"
+                            className="bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px] font-mono"
+                          />
+                          <input
+                            type="text"
+                            value={photo.location || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => {
+                                const ph = [...y.photos];
+                                ph[pIdx].location = val;
+                                return { ...y, photos: ph };
+                              });
+                            }}
+                            placeholder="Lokasi"
+                            className="bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px]"
+                          />
+                          <select
+                            value={photo.mediaType || (isItemVideo ? 'video' : 'image')}
+                            onChange={(e) => {
+                              const val = e.target.value as 'image' | 'video';
+                              updateCurrentYear(y => {
+                                const ph = [...y.photos];
+                                ph[pIdx].mediaType = val;
+                                return { ...y, photos: ph };
+                              });
+                            }}
+                            className="bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px] cursor-pointer"
+                          >
+                            <option value="image">Foto</option>
+                            <option value="video">Video</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Caption & URL */}
-                  <div className="space-y-1.5 text-xs">
-                    <textarea
-                      value={photo.caption}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        updateCurrentYear(y => {
-                          const ph = [...y.photos];
-                          ph[pIdx].caption = val;
-                          return { ...y, photos: ph };
-                        });
-                      }}
-                      placeholder="Keterangan / Pesan di balik foto..."
-                      rows={2}
-                      className="w-full bg-white px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs leading-relaxed"
-                    />
-
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={photo.imageUrl}
+                    {/* Caption & URL */}
+                    <div className="space-y-1.5 text-xs">
+                      <textarea
+                        value={photo.caption}
                         onChange={(e) => {
                           const val = e.target.value;
                           updateCurrentYear(y => {
                             const ph = [...y.photos];
-                            ph[pIdx].imageUrl = val;
+                            ph[pIdx].caption = val;
                             return { ...y, photos: ph };
                           });
                         }}
-                        placeholder="URL Foto atau ./photos/..."
-                        className="flex-1 bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px] font-mono"
+                        placeholder="Keterangan / Cerita di balik momen ini..."
+                        rows={2}
+                        className="w-full bg-white px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs leading-relaxed"
                       />
 
-                      <label className="px-2.5 py-1 rounded-lg bg-rose-accent hover:bg-rose-hover text-white text-[11px] font-medium flex items-center gap-1 cursor-pointer transition-colors flex-shrink-0">
-                        <Upload size={12} strokeWidth={1.5} />
-                        <span>Unggah</span>
+                      <div className="flex items-center gap-2">
                         <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) => handleUploadPhoto(e, pIdx)}
+                          type="text"
+                          value={photo.imageUrl}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            updateCurrentYear(y => {
+                              const ph = [...y.photos];
+                              ph[pIdx].imageUrl = val;
+                              return { ...y, photos: ph };
+                            });
+                          }}
+                          placeholder="URL Foto / Video atau ./photos/... atau ./videos/..."
+                          className="flex-1 bg-white px-2 py-1 rounded-lg border border-cream-200 text-[11px] font-mono"
                         />
-                      </label>
+
+                        <label className="px-2.5 py-1 rounded-lg bg-rose-accent hover:bg-rose-hover text-white text-[11px] font-medium flex items-center gap-1 cursor-pointer transition-colors flex-shrink-0">
+                          <Upload size={12} strokeWidth={1.5} />
+                          <span>Unggah</span>
+                          <input
+                            type="file"
+                            accept="image/*,video/*"
+                            className="hidden"
+                            onChange={(e) => handleUploadMedia(e, pIdx)}
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
 
