@@ -1017,6 +1017,7 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                       const newType = e.target.value as MiniGameType;
                       updateCurrentYear(y => {
                         const mg = { ...y.miniGame, type: newType };
+
                         if (newType === 'memory-match' && (!mg.matchData || mg.matchData.length === 0)) {
                           mg.matchData = [
                             { id: 1, label: 'Senja Basah', iconName: 'CloudSun' },
@@ -1024,14 +1025,43 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                             { id: 3, label: 'Lagu Rahasia', iconName: 'Music' }
                           ];
                         }
+
                         if (newType === 'quiz' && (!mg.quizData || mg.quizData.length === 0)) {
                           mg.quizData = [{
-                            question: 'Pertanyaan kenangan...',
-                            options: ['Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D'],
+                            question: `Pertanyaan kenangan tentang tahun ${y.year}...`,
+                            options: ['Pilihan Jawaban A', 'Pilihan Jawaban B', 'Pilihan Jawaban C', 'Pilihan Jawaban D'],
                             correctIndex: 0,
-                            hint: 'Petunjuk singkat...'
+                            hint: 'Petunjuk singkat untuk menjawab...'
                           }];
                         }
+
+                        if (newType === 'cipher-code' && !mg.cipherData) {
+                          mg.cipherData = {
+                            targetCode: '1806',
+                            prompt: 'Masukkan 4 digit PIN kenangan',
+                            hint: 'Tanggal atau angka momen spesial'
+                          };
+                        }
+
+                        if (newType === 'word-unscramble' && !mg.wordData) {
+                          mg.wordData = {
+                            answer: 'CINTA',
+                            letters: ['C', 'I', 'N', 'T', 'A'],
+                            hint: 'Satu kata yang merangkum semua rasa'
+                          };
+                        }
+
+                        if (newType === 'final-celebration' && !mg.finalData) {
+                          mg.finalData = {
+                            title: 'Sophie Grisella Olivia 25th Milestone',
+                            dedication: 'Didedikasikan untuk wanita paling istimewa',
+                            letterLines: [
+                              'Delapan tahun perjalanan telah terangkum indah dalam lembaran ini.',
+                              'Selamat Ulang Tahun ke-25, Sophie Grisella Olivia.'
+                            ]
+                          };
+                        }
+
                         return { ...y, miniGame: mg };
                       });
                     }}
@@ -1046,7 +1076,7 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                 </div>
 
                 {/* 1. Quiz Questions & Answers Editor */}
-                {(currentYear.miniGame.quizData || currentYear.miniGame.type === 'quiz') && (
+                {currentYear.miniGame.type === 'quiz' && (
                   <div className="space-y-3 pt-2 border-t border-cream-200">
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase">
@@ -1206,7 +1236,7 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                 )}
 
                 {/* 2. Memory Match Cards Editor (Tantangan Kartu Pasang) */}
-                {(currentYear.miniGame.matchData || currentYear.miniGame.type === 'memory-match') && (
+                {currentYear.miniGame.type === 'memory-match' && (
                   <div className="space-y-3 pt-2 border-t border-cream-200">
                     <div className="flex items-center justify-between">
                       <div>
@@ -1361,46 +1391,65 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   </div>
                 )}
 
-                {/* If Cipher Code Game */}
-                {currentYear.miniGame.cipherData && (
-                  <div className="p-3 rounded-xl bg-white border border-cream-200 space-y-2">
-                    <span className="text-[10px] font-semibold tracking-wider text-rose-hover uppercase">
-                      KODE PIN RAHASIA
-                    </span>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
+                {/* 3. Cipher Code Game */}
+                {currentYear.miniGame.type === 'cipher-code' && (
+                  <div className="p-3.5 rounded-xl bg-white border border-cream-200 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase">
+                        KODE PIN RAHASIA
+                      </span>
+                      <span className="text-[10px] text-charcoal-muted">
+                        Pemain harus memasukkan 4 angka PIN ini untuk membuka tahun berikutnya
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                       <div>
                         <label className="text-[10px] text-charcoal-muted block mb-1">Target Angka PIN</label>
                         <input
                           type="text"
-                          value={currentYear.miniGame.cipherData.targetCode}
+                          value={currentYear.miniGame.cipherData?.targetCode || ''}
                           onChange={(e) => {
                             const val = e.target.value;
                             updateCurrentYear(y => ({
                               ...y,
                               miniGame: {
                                 ...y.miniGame,
-                                cipherData: y.miniGame.cipherData ? { ...y.miniGame.cipherData, targetCode: val } : undefined
+                                cipherData: {
+                                  prompt: y.miniGame.cipherData?.prompt || 'Masukkan 4 digit PIN kenangan',
+                                  hint: y.miniGame.cipherData?.hint || 'Tanggal atau angka momen spesial',
+                                  ...y.miniGame.cipherData,
+                                  targetCode: val
+                                }
                               }
                             }));
                           }}
+                          placeholder="Contoh: 1806"
                           className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 font-mono text-sm"
                         />
                       </div>
+
                       <div>
-                        <label className="text-[10px] text-charcoal-muted block mb-1">Petunjuk (Hint)</label>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">Petunjuk Bantuan (Hint)</label>
                         <input
                           type="text"
-                          value={currentYear.miniGame.cipherData.hint}
+                          value={currentYear.miniGame.cipherData?.hint || ''}
                           onChange={(e) => {
                             const val = e.target.value;
                             updateCurrentYear(y => ({
                               ...y,
                               miniGame: {
                                 ...y.miniGame,
-                                cipherData: y.miniGame.cipherData ? { ...y.miniGame.cipherData, hint: val } : undefined
+                                cipherData: {
+                                  prompt: y.miniGame.cipherData?.prompt || 'Masukkan 4 digit PIN kenangan',
+                                  targetCode: y.miniGame.cipherData?.targetCode || '1806',
+                                  ...y.miniGame.cipherData,
+                                  hint: val
+                                }
                               }
                             }));
                           }}
+                          placeholder="Petunjuk jika lupa PIN..."
                           className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
                         />
                       </div>
@@ -1408,51 +1457,159 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   </div>
                 )}
 
-                {/* If Word Unscramble Game */}
-                {currentYear.miniGame.wordData && (
-                  <div className="p-3 rounded-xl bg-white border border-cream-200 space-y-2">
-                    <span className="text-[10px] font-semibold tracking-wider text-rose-hover uppercase">
-                      KATA KUNCI RAHASIA
-                    </span>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
+                {/* 4. Word Unscramble Game */}
+                {currentYear.miniGame.type === 'word-unscramble' && (
+                  <div className="p-3.5 rounded-xl bg-white border border-cream-200 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase">
+                        KATA KUNCI RAHASIA (SUSUN KATA)
+                      </span>
+                      <span className="text-[10px] text-charcoal-muted">
+                        Huruf kata ini akan diacak dan pemain harus menyusunnya dengan benar
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                       <div>
-                        <label className="text-[10px] text-charcoal-muted block mb-1">Target Jawaban</label>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">Target Kata Jawaban (Huruf Kapital)</label>
                         <input
                           type="text"
-                          value={currentYear.miniGame.wordData.answer}
+                          value={currentYear.miniGame.wordData?.answer || ''}
                           onChange={(e) => {
                             const val = e.target.value.toUpperCase();
                             updateCurrentYear(y => ({
                               ...y,
                               miniGame: {
                                 ...y.miniGame,
-                                wordData: y.miniGame.wordData ? {
+                                wordData: {
+                                  hint: y.miniGame.wordData?.hint || 'Kata kenangan spesial',
                                   ...y.miniGame.wordData,
                                   answer: val,
                                   letters: val.split('')
-                                } : undefined
+                                }
                               }
                             }));
                           }}
-                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 font-mono text-sm"
+                          placeholder="Contoh: CINTA, JANJI..."
+                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 font-mono text-sm tracking-wider"
                         />
                       </div>
+
                       <div>
-                        <label className="text-[10px] text-charcoal-muted block mb-1">Petunjuk (Hint)</label>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">Petunjuk Bantuan (Hint)</label>
                         <input
                           type="text"
-                          value={currentYear.miniGame.wordData.hint}
+                          value={currentYear.miniGame.wordData?.hint || ''}
                           onChange={(e) => {
                             const val = e.target.value;
                             updateCurrentYear(y => ({
                               ...y,
                               miniGame: {
                                 ...y.miniGame,
-                                wordData: y.miniGame.wordData ? { ...y.miniGame.wordData, hint: val } : undefined
+                                wordData: {
+                                  answer: y.miniGame.wordData?.answer || 'CINTA',
+                                  letters: (y.miniGame.wordData?.answer || 'CINTA').split(''),
+                                  ...y.miniGame.wordData,
+                                  hint: val
+                                }
                               }
                             }));
                           }}
+                          placeholder="Petunjuk kata..."
                           className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* 5. Final Celebration Dedication Editor */}
+                {currentYear.miniGame.type === 'final-celebration' && (
+                  <div className="p-3.5 rounded-xl bg-white border border-cream-200 space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase">
+                        KAPSUL KENANGAN AKHIR (DEDIKASI)
+                      </span>
+                      <span className="text-[10px] text-charcoal-muted">
+                        Pesan penutup perayaan 25 tahun yang tampil di babak puncak
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 text-xs">
+                      <div>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">Judul Kapsul Kenangan</label>
+                        <input
+                          type="text"
+                          value={currentYear.miniGame.finalData?.title || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            updateCurrentYear(y => ({
+                              ...y,
+                              miniGame: {
+                                ...y.miniGame,
+                                finalData: {
+                                  dedication: y.miniGame.finalData?.dedication || '',
+                                  letterLines: y.miniGame.finalData?.letterLines || [],
+                                  ...y.miniGame.finalData,
+                                  title: val
+                                }
+                              }
+                            }));
+                          }}
+                          placeholder="Sophie Grisella Olivia 25th Milestone"
+                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs font-medium"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">Dedikasi / Subjudul</label>
+                        <input
+                          type="text"
+                          value={currentYear.miniGame.finalData?.dedication || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            updateCurrentYear(y => ({
+                              ...y,
+                              miniGame: {
+                                ...y.miniGame,
+                                finalData: {
+                                  title: y.miniGame.finalData?.title || '',
+                                  letterLines: y.miniGame.finalData?.letterLines || [],
+                                  ...y.miniGame.finalData,
+                                  dedication: val
+                                }
+                              }
+                            }));
+                          }}
+                          placeholder="Didedikasikan untuk wanita paling istimewa"
+                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">
+                          Baris Surat Penutup (Pisahkan tiap baris dengan baris baru / Enter)
+                        </label>
+                        <textarea
+                          value={(currentYear.miniGame.finalData?.letterLines || []).join('\n')}
+                          onChange={(e) => {
+                            const lines = e.target.value.split('\n');
+                            updateCurrentYear(y => ({
+                              ...y,
+                              miniGame: {
+                                ...y.miniGame,
+                                finalData: {
+                                  title: y.miniGame.finalData?.title || 'Sophie Grisella Olivia 25th Milestone',
+                                  dedication: y.miniGame.finalData?.dedication || '',
+                                  ...y.miniGame.finalData,
+                                  letterLines: lines
+                                }
+                              }
+                            }));
+                          }}
+                          rows={4}
+                          placeholder="Tulis kalimat-kalimat surat penutup..."
+                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs leading-relaxed"
                         />
                       </div>
                     </div>
