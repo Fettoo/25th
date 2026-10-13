@@ -17,7 +17,10 @@ import {
   AlertCircle,
   FileText,
   Eye,
-  Film
+  Film,
+  GripVertical,
+  ArrowUp,
+  ArrowDown
 } from 'lucide-react';
 import { YearData, MemoryPhoto, SongTrack } from '../types/index';
 import { 
@@ -52,6 +55,8 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
   const [isPlayingPreview, setIsPlayingPreview] = useState(false);
   const [saveStatus, setSaveStatus] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [draggedPhotoIndex, setDraggedPhotoIndex] = useState<number | null>(null);
+  const [dragOverPhotoIndex, setDragOverPhotoIndex] = useState<number | null>(null);
 
   if (!isOpen) return null;
 
@@ -64,6 +69,29 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
       updated[activeYearIndex] = updater(updated[activeYearIndex]);
       return updated;
     });
+  };
+
+  // Reorder photos handler
+  const handleReorderPhotos = (sourceIndex: number, destinationIndex: number) => {
+    if (sourceIndex === destinationIndex) return;
+    updateCurrentYear(year => {
+      const updatedPhotos = [...year.photos];
+      const [movedItem] = updatedPhotos.splice(sourceIndex, 1);
+      updatedPhotos.splice(destinationIndex, 0, movedItem);
+      return { ...year, photos: updatedPhotos };
+    });
+  };
+
+  const handleMovePhotoUp = (index: number) => {
+    if (index > 0) {
+      handleReorderPhotos(index, index - 1);
+    }
+  };
+
+  const handleMovePhotoDown = (index: number) => {
+    if (index < currentYear.photos.length - 1) {
+      handleReorderPhotos(index, index + 1);
+    }
   };
 
   // Preview Audio Test
@@ -389,10 +417,10 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-serif text-base font-medium">
-                    Galeri Foto Tahun {currentYear.year}
+                    Galeri Foto & Video Tahun {currentYear.year}
                   </h3>
                   <p className="text-[11px] text-charcoal-muted">
-                    Setiap foto akan otomatis dilapisi kartu gosok di halaman utama.
+                    Tahan dan geser (drag & drop) atau gunakan tombol panah untuk mengubah urutan tampil di jurnal.
                   </p>
                 </div>
                 <button
@@ -400,7 +428,7 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   className="px-3 py-1.5 rounded-xl bg-cream-100 hover:bg-cream-200 text-charcoal text-xs font-medium flex items-center gap-1.5 border border-cream-200 cursor-pointer"
                 >
                   <Plus size={13} strokeWidth={1.5} />
-                  <span>Tambah Foto</span>
+                  <span>Tambah Foto/Video</span>
                 </button>
               </div>
 
@@ -410,8 +438,53 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   Boolean(photo.imageUrl && photo.imageUrl.startsWith('data:video/'));
 
                 return (
-                  <div key={photo.id || pIdx} className="p-3.5 rounded-2xl bg-cream-100/70 border border-cream-200 space-y-3">
-                    <div className="flex items-start gap-3">
+                  <div 
+                    key={photo.id || pIdx}
+                    draggable
+                    onDragStart={(e) => {
+                      setDraggedPhotoIndex(pIdx);
+                      e.dataTransfer.effectAllowed = 'move';
+                    }}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      e.dataTransfer.dropEffect = 'move';
+                      if (dragOverPhotoIndex !== pIdx) {
+                        setDragOverPhotoIndex(pIdx);
+                      }
+                    }}
+                    onDragLeave={() => {
+                      if (dragOverPhotoIndex === pIdx) {
+                        setDragOverPhotoIndex(null);
+                      }
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      if (draggedPhotoIndex !== null && draggedPhotoIndex !== pIdx) {
+                        handleReorderPhotos(draggedPhotoIndex, pIdx);
+                      }
+                      setDraggedPhotoIndex(null);
+                      setDragOverPhotoIndex(null);
+                    }}
+                    onDragEnd={() => {
+                      setDraggedPhotoIndex(null);
+                      setDragOverPhotoIndex(null);
+                    }}
+                    className={`p-3.5 rounded-2xl bg-cream-100/70 border space-y-3 transition-all duration-200 ${
+                      dragOverPhotoIndex === pIdx 
+                        ? 'border-rose-accent bg-rose-soft/40 shadow-sm' 
+                        : 'border-cream-200'
+                    } ${draggedPhotoIndex === pIdx ? 'opacity-40 scale-[0.99]' : 'opacity-100'}`}
+                  >
+                    <div className="flex items-start gap-2.5">
+                      {/* Drag Grip Handle & Index */}
+                      <div 
+                        className="flex flex-col items-center justify-center gap-1 text-charcoal-subtle cursor-grab active:cursor-grabbing self-stretch py-1 select-none pr-1"
+                        title="Tahan dan geser untuk mengubah urutan"
+                      >
+                        <GripVertical size={16} strokeWidth={1.5} />
+                        <span className="text-[10px] font-mono font-semibold">#{pIdx + 1}</span>
+                      </div>
+
                       {/* Thumbnail preview */}
                       <div className="w-20 h-20 rounded-xl overflow-hidden bg-cream-200 flex-shrink-0 relative border border-cream-200 flex items-center justify-center">
                         {isItemVideo ? (
@@ -434,7 +507,7 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                       </div>
 
                       <div className="flex-1 space-y-2 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center justify-between gap-1.5">
                           <input
                             type="text"
                             value={photo.title}
@@ -449,13 +522,36 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                             placeholder="Judul Media"
                             className="font-serif text-sm font-medium bg-white px-2 py-1 rounded-lg border border-cream-200 w-full"
                           />
-                          <button
-                            onClick={() => handleRemovePhoto(pIdx)}
-                            className="text-rose-hover hover:text-rose-700 p-1 cursor-pointer"
-                            title="Hapus media ini"
-                          >
-                            <Trash2 size={15} strokeWidth={1.5} />
-                          </button>
+                          
+                          {/* Reorder and Delete Actions */}
+                          <div className="flex items-center gap-0.5 flex-shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => handleMovePhotoUp(pIdx)}
+                              disabled={pIdx === 0}
+                              title="Pindah ke atas"
+                              className="p-1 rounded hover:bg-cream-200/80 disabled:opacity-20 disabled:cursor-not-allowed text-charcoal transition-colors cursor-pointer"
+                            >
+                              <ArrowUp size={13} strokeWidth={1.5} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleMovePhotoDown(pIdx)}
+                              disabled={pIdx === currentYear.photos.length - 1}
+                              title="Pindah ke bawah"
+                              className="p-1 rounded hover:bg-cream-200/80 disabled:opacity-20 disabled:cursor-not-allowed text-charcoal transition-colors cursor-pointer"
+                            >
+                              <ArrowDown size={13} strokeWidth={1.5} />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleRemovePhoto(pIdx)}
+                              className="text-rose-hover hover:text-rose-700 p-1 cursor-pointer transition-colors"
+                              title="Hapus media ini"
+                            >
+                              <Trash2 size={15} strokeWidth={1.5} />
+                            </button>
+                          </div>
                         </div>
 
                         <div className="grid grid-cols-3 gap-2 text-xs">

@@ -5,28 +5,75 @@
     "title": "Awal Mula Cerita",
     "subtitle": "Titik di mana dua garis takdir mulai bersinggungan",
     "song": {
-      "title": "First Encounter",
-      "fileName": "first-encounter-2018.mp3",
-      "artist": "Acoustic Memories",
-      "audioUrl": "./audio/2018.mp3",
+      "title": "Adelaide Sky",
+      "fileName": "Adelaide Sky.mp3",
+      "artist": "Adhitia Sofyan",
+      "audioUrl": "./audio/Adelaide_Sky.mp3",
       "synthTheme": "nostalgic"
     },
     "photos": [
       {
         "id": "2018-01",
-        "title": "Pertemuan Pertama",
-        "date": "Oktober 2018",
-        "caption": "Hari di mana tatap mata pertama kali berbicara tanpa kata.",
-        "location": "Sudut Kota",
-        "imageUrl": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
+        "title": "Judul Foto Kenangan",
+        "date": "June 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35.webp",
+        "mediaType": "image"
       },
       {
         "id": "2018-02",
-        "title": "Tawa Canggung Pertama",
-        "date": "November 2018",
-        "caption": "Secangkir kopi yang mendingin karena cerita yang tak kunjung habis.",
+        "title": "Judul Foto Kenangan",
+        "date": "May 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
         "location": "",
-        "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2018-03",
+        "title": "Judul Foto Kenangan",
+        "date": "June 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__2_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2018-04",
+        "title": "Judul Foto Kenangan",
+        "date": "July 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "Nama Tempat",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__3_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2018-05",
+        "title": "Judul Foto Kenangan",
+        "date": "August 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__4_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2018-06",
+        "title": "Judul Foto Kenangan",
+        "date": "June 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36.mp4",
+        "mediaType": "video"
+      },
+      {
+        "id": "2018-07",
+        "title": "Judul Foto Kenangan",
+        "date": "June 2018",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36__1_.mp4",
+        "mediaType": "video"
       }
     ],
     "wish": {
