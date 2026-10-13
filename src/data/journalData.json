@@ -84,42 +84,31 @@
     },
     "miniGame": {
       "type": "quiz",
-      "title": "Kuis Pertemuan Pertama",
-      "instructions": "Jawab tiga pertanyaan tentang awal mula perjalanan kita untuk membuka babak berikutnya.",
+      "title": "Pertemuan Pertama",
+      "instructions": "Jawab tiga pertanyaan tentang awal mula perjalanan kita.",
       "badgeLabel": "BABAK 01 TANTANGAN",
       "quizData": [
         {
-          "question": "Apa kesan pertama yang paling tak terlupakan saat kita pertama kali berbicara?",
+          "question": "Dimana lokasi kita di foto ke 6",
           "options": [
-            "Tatapan mata yang hangat dan senyum yang ramah",
-            "Suasana hening yang penuh rasa canggung",
-            "Pembicaraan tentang buku dan musik favorit",
-            "Lelucon sederhana yang membuat tertawa lepas"
+            "Jakarta Selatan",
+            "Gading Serpong",
+            "Bandung",
+            "Sentul"
           ],
-          "correctIndex": 0,
-          "hint": "Ingat kembali bagaimana kita saling menatap saat pertama kali duduk berhadapan."
+          "correctIndex": 2,
+          "hint": ""
         },
         {
-          "question": "Minuman apa yang menemani percakapan panjang kita di awal perkenalan?",
+          "question": "Kado dan suprise pertama",
           "options": [
-            "Teh hangat dengan sedikit gula",
-            "Kopi susu hangat dengan busa lembut",
-            "Cokelat panas di sore hari",
-            "Air mineral dingin"
+            "Polaroid + Makan",
+            "Onesie + Balon",
+            "Blind box + Bucket",
+            "Tas + Surat"
           ],
           "correctIndex": 1,
-          "hint": "Aroma hangat yang menemani obrolan hingga kedai hampir tutup."
-        },
-        {
-          "question": "Kapan kita menyadari bahwa obrolan ini bukan sekadar basa-basi?",
-          "options": [
-            "Saat kita mulai berbagi cerita masa kecil",
-            "Saat hari kedua kita bertemu",
-            "Saat berjanji untuk saling mengirim kabar setiap pagi",
-            "Saat waktu terasa berlalu begitu cepat tanpa disadari"
-          ],
-          "correctIndex": 3,
-          "hint": "Perasaan ketika jam dinding bergerak tiga kali lebih cepat dari biasanya."
+          "hint": ""
         }
       ]
     }
@@ -130,35 +119,73 @@
     "title": "Langkah-Langkah Kecil",
     "subtitle": "Belajar memahami ritme dan kebiasaan sederhana",
     "song": {
-      "title": "Gentle Rhythm",
-      "fileName": "gentle-rhythm-2019.mp3",
-      "artist": "Warm Strings",
-      "audioUrl": "./audio/2019.mp3",
+      "title": "Rendy Pandugo - Hampir Sempurna Video Lirik",
+      "fileName": "Rendy Pandugo - Hampir Sempurna Video Lirik.mp3",
+      "artist": "Rendy Pandugo",
+      "audioUrl": "./audio/Rendy_Pandugo_-_Hampir_Sempurna_Video_Lirik.mp3",
       "synthTheme": "gentle"
     },
     "photos": [
       {
         "id": "2019-01",
-        "title": "Perjalanan Singkat",
-        "date": "Maret 2019",
-        "caption": "Menikmati semilir angin sore di jalanan yang basah setelah hujan.",
-        "location": "Taman Kota",
-        "imageUrl": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "October 2019",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.11.webp",
+        "mediaType": "image"
       },
       {
         "id": "2019-02",
-        "title": "Senyum Tulus Sophie",
-        "date": "September 2019",
-        "caption": "Salah satu foto favorit yang membuktikan kebahagiaan itu sederhana.",
-        "location": "Kala Sore",
-        "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "October 2019",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.12.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2019-04",
+        "title": "",
+        "date": "November 2019",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.13.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2019-03",
+        "title": "",
+        "date": "December 2019",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.13__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2019-05",
+        "title": "Judul Foto Kenangan",
+        "date": "October 2019",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.05.11.mp4",
+        "mediaType": "video"
+      },
+      {
+        "id": "2019-06",
+        "title": "",
+        "date": "October 2019",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.05.12.mp4",
+        "mediaType": "video"
       }
     ],
     "wish": {
-      "themeTitle": "Menemukan Irama Bersama",
-      "authorNote": "Catatan kebersamaan 2019",
+      "themeTitle": "Masuk Tahun yang Baru",
+      "authorNote": "",
       "shortWish": "Belajar bahwa cinta bukan tentang persamaan yang sempurna, melainkan kesediaan untuk saling melengkapi.",
-      "longWish": "Tahun 2019 adalah tahun di mana kita belajar banyak hal tentang satu sama lain. Aku mulai tahu makanan apa yang membuatmu tersenyum, dan lagu apa yang selalu kau putar saat sedang lelah. Kamu selalu punya cara untuk menenangkan hatiku yang sering terburu-buru. Di tahun ini, aku semakin yakin bahwa memiliki Sophie di sisiku adalah anugerah terbesar yang tak pernah kusangka akan datang."
+      "longWish": "Tahun 2019 adalah tahun di mana kita ku kasih birthday gift kedua buat mu, disaat itu juga perkenalan mulai lebih dalam. Saling belajar apa kesukaan satu sama lain dan saling berusaha buat mengerti"
     },
     "miniGame": {
       "type": "memory-match",
@@ -190,10 +217,10 @@
     "title": "Dalam Jarak dan Doa",
     "subtitle": "Dunia melambat, namun rasa kita tumbuh semakin tabah",
     "song": {
-      "title": "Quiet Patience",
-      "fileName": "quiet-patience-2020.mp3",
-      "artist": "Solitude Piano",
-      "audioUrl": "./audio/2020.mp3",
+      "title": "Ben Sihombing feat. Cindercella - Hati (Official Lyric Video)",
+      "fileName": "Ben Sihombing feat. Cindercella - Hati (Official Lyric Video).mp3",
+      "artist": "Ben Sihombing - Cindercella",
+      "audioUrl": "./audio/Ben_Sihombing_feat._Cindercella_-_Hati__Official_Lyric_Video_.mp3",
       "synthTheme": "deep"
     },
     "photos": [

@@ -14,7 +14,16 @@ import {
   BookOpen, 
   HelpCircle,
   KeyRound,
-  Sparkles
+  Sparkles,
+  Heart,
+  Camera,
+  Star,
+  Gift,
+  Sun,
+  Moon,
+  Film,
+  MapPin,
+  Compass
 } from 'lucide-react';
 import { YearMiniGame, QuizQuestion, MemoryCardItem } from '../types';
 
@@ -293,6 +302,15 @@ const renderIcon = (name: string) => {
     case 'Utensils': return <Utensils size={18} strokeWidth={1.5} />;
     case 'Lamp': return <Lamp size={18} strokeWidth={1.5} />;
     case 'BookOpen': return <BookOpen size={18} strokeWidth={1.5} />;
+    case 'Heart': return <Heart size={18} strokeWidth={1.5} />;
+    case 'Camera': return <Camera size={18} strokeWidth={1.5} />;
+    case 'Star': return <Star size={18} strokeWidth={1.5} />;
+    case 'Gift': return <Gift size={18} strokeWidth={1.5} />;
+    case 'Sun': return <Sun size={18} strokeWidth={1.5} />;
+    case 'Moon': return <Moon size={18} strokeWidth={1.5} />;
+    case 'Film': return <Film size={18} strokeWidth={1.5} />;
+    case 'MapPin': return <MapPin size={18} strokeWidth={1.5} />;
+    case 'Compass': return <Compass size={18} strokeWidth={1.5} />;
     default: return <Sparkles size={18} strokeWidth={1.5} />;
   }
 };
@@ -350,7 +368,7 @@ const MemoryMatchGame: React.FC<MemoryMatchGameProps> = ({ items, onComplete, is
 
   return (
     <div className="bg-cream-50 rounded-inner p-4 border border-cream-200/80">
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className={`grid ${cards.length <= 6 ? 'grid-cols-3' : 'grid-cols-4'} gap-2 sm:gap-2.5`}>
         {cards.map((c) => {
           const isCardFlipped = flipped.includes(c.uid) || matched.includes(c.uid);
           const isCardMatched = matched.includes(c.uid);

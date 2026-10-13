@@ -20,9 +20,23 @@ import {
   Film,
   GripVertical,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  CloudSun,
+  Coffee,
+  Heart,
+  Star,
+  Sparkles,
+  Utensils,
+  Lamp,
+  BookOpen,
+  MapPin,
+  Gift,
+  Sun,
+  Moon,
+  Compass,
+  Camera
 } from 'lucide-react';
-import { YearData, MemoryPhoto, SongTrack } from '../types/index';
+import { YearData, MemoryPhoto, SongTrack, MiniGameType } from '../types/index';
 import { 
   saveJournalData, 
   uploadMediaAsset, 
@@ -40,6 +54,46 @@ interface StudioDashboardProps {
 }
 
 type StudioTab = 'music' | 'photos' | 'wishes' | 'game';
+
+const AVAILABLE_MATCH_ICONS = [
+  { name: 'CloudSun', label: 'Senja / Cuaca' },
+  { name: 'Coffee', label: 'Kopi / Minuman' },
+  { name: 'Music', label: 'Musik / Nada' },
+  { name: 'Heart', label: 'Hati / Sayang' },
+  { name: 'Camera', label: 'Kamera / Foto' },
+  { name: 'Star', label: 'Bintang' },
+  { name: 'Sparkles', label: 'Kilau Momen' },
+  { name: 'Utensils', label: 'Makan Berdua' },
+  { name: 'Lamp', label: 'Lentera Malam' },
+  { name: 'BookOpen', label: 'Buku / Cerita' },
+  { name: 'MapPin', label: 'Lokasi / Perjalanan' },
+  { name: 'Gift', label: 'Hadiah / Kado' },
+  { name: 'Film', label: 'Sinema / Video' },
+  { name: 'Sun', label: 'Matahari' },
+  { name: 'Moon', label: 'Bulan' },
+  { name: 'Compass', label: 'Kompas' },
+];
+
+const renderMatchIconPreview = (name: string, size = 16) => {
+  switch (name) {
+    case 'CloudSun': return <CloudSun size={size} strokeWidth={1.5} />;
+    case 'Coffee': return <Coffee size={size} strokeWidth={1.5} />;
+    case 'Music': return <Music size={size} strokeWidth={1.5} />;
+    case 'Heart': return <Heart size={size} strokeWidth={1.5} />;
+    case 'Camera': return <Camera size={size} strokeWidth={1.5} />;
+    case 'Star': return <Star size={size} strokeWidth={1.5} />;
+    case 'Utensils': return <Utensils size={size} strokeWidth={1.5} />;
+    case 'Lamp': return <Lamp size={size} strokeWidth={1.5} />;
+    case 'BookOpen': return <BookOpen size={size} strokeWidth={1.5} />;
+    case 'MapPin': return <MapPin size={size} strokeWidth={1.5} />;
+    case 'Gift': return <Gift size={size} strokeWidth={1.5} />;
+    case 'Film': return <Film size={size} strokeWidth={1.5} />;
+    case 'Sun': return <Sun size={size} strokeWidth={1.5} />;
+    case 'Moon': return <Moon size={size} strokeWidth={1.5} />;
+    case 'Compass': return <Compass size={size} strokeWidth={1.5} />;
+    default: return <Sparkles size={size} strokeWidth={1.5} />;
+  }
+};
 
 export const StudioDashboard: React.FC<StudioDashboardProps> = ({
   isOpen,
@@ -952,6 +1006,45 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   />
                 </div>
 
+                {/* Tipe Tantangan Babak */}
+                <div className="space-y-1">
+                  <label className="text-[11px] font-medium text-charcoal-muted block">
+                    Tipe Tantangan Babak
+                  </label>
+                  <select
+                    value={currentYear.miniGame.type}
+                    onChange={(e) => {
+                      const newType = e.target.value as MiniGameType;
+                      updateCurrentYear(y => {
+                        const mg = { ...y.miniGame, type: newType };
+                        if (newType === 'memory-match' && (!mg.matchData || mg.matchData.length === 0)) {
+                          mg.matchData = [
+                            { id: 1, label: 'Senja Basah', iconName: 'CloudSun' },
+                            { id: 2, label: 'Kopi Favorit', iconName: 'Coffee' },
+                            { id: 3, label: 'Lagu Rahasia', iconName: 'Music' }
+                          ];
+                        }
+                        if (newType === 'quiz' && (!mg.quizData || mg.quizData.length === 0)) {
+                          mg.quizData = [{
+                            question: 'Pertanyaan kenangan...',
+                            options: ['Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D'],
+                            correctIndex: 0,
+                            hint: 'Petunjuk singkat...'
+                          }];
+                        }
+                        return { ...y, miniGame: mg };
+                      });
+                    }}
+                    className="w-full bg-white px-3 py-1.5 rounded-xl border border-cream-200 text-xs font-medium cursor-pointer"
+                  >
+                    <option value="quiz">Kuis Pertanyaan (Tanya Jawab)</option>
+                    <option value="memory-match">Kartu Pasangan Memori (Cocokkan Simbol)</option>
+                    <option value="word-unscramble">Susun Kata Kunci Rahasia</option>
+                    <option value="cipher-code">Kode PIN Rahasia</option>
+                    <option value="final-celebration">Kapsul Kenangan Akhir</option>
+                  </select>
+                </div>
+
                 {/* 1. Quiz Questions & Answers Editor */}
                 {(currentYear.miniGame.quizData || currentYear.miniGame.type === 'quiz') && (
                   <div className="space-y-3 pt-2 border-t border-cream-200">
@@ -1109,6 +1202,162 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                         </div>
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {/* 2. Memory Match Cards Editor (Tantangan Kartu Pasang) */}
+                {(currentYear.miniGame.matchData || currentYear.miniGame.type === 'memory-match') && (
+                  <div className="space-y-3 pt-2 border-t border-cream-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase block">
+                          KARTU PASANGAN MEMORI ({currentYear.miniGame.matchData?.length || 0} PASANG)
+                        </span>
+                        <span className="text-[10px] text-charcoal-muted">
+                          Ubah teks label kartu dan simbol ikon yang harus dicocokkan pemain
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          updateCurrentYear(y => {
+                            const currentMatch = y.miniGame.matchData ? [...y.miniGame.matchData] : [];
+                            const nextId = currentMatch.length > 0 ? Math.max(...currentMatch.map(m => m.id)) + 1 : 1;
+                            currentMatch.push({
+                              id: nextId,
+                              label: 'Kenangan Baru',
+                              iconName: 'Heart'
+                            });
+                            return {
+                              ...y,
+                              miniGame: { ...y.miniGame, matchData: currentMatch }
+                            };
+                          });
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-cream-50 hover:bg-cream-200 border border-cream-200 text-charcoal text-[11px] font-medium flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <Plus size={12} strokeWidth={1.5} />
+                        <span>Tambah Pasangan</span>
+                      </button>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {currentYear.miniGame.matchData?.map((item, idx) => (
+                        <div key={item.id || idx} className="p-3.5 rounded-xl bg-white border border-cream-200 space-y-2.5 shadow-xs">
+                          {/* Card Header & Delete */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-cream-100 text-charcoal">
+                                PASANGAN #{idx + 1}
+                              </span>
+                              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-50 border border-rose-100 text-rose-accent text-[11px]">
+                                {renderMatchIconPreview(item.iconName, 13)}
+                                <span className="font-medium text-charcoal text-[11px] truncate max-w-[150px]">
+                                  {item.label || 'Tanpa Label'}
+                                </span>
+                              </div>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                updateCurrentYear(y => {
+                                  const currentMatch = y.miniGame.matchData?.filter((_, mIdx) => mIdx !== idx);
+                                  return {
+                                    ...y,
+                                    miniGame: { ...y.miniGame, matchData: currentMatch }
+                                  };
+                                });
+                              }}
+                              className="text-rose-hover hover:text-rose-700 p-0.5 cursor-pointer transition-colors"
+                              title="Hapus pasangan kartu ini"
+                            >
+                              <Trash2 size={13} strokeWidth={1.5} />
+                            </button>
+                          </div>
+
+                          {/* Inputs: Label & Select Icon */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <label className="text-[10px] text-charcoal-muted block mb-1">
+                                Teks Label Kartu
+                              </label>
+                              <input
+                                type="text"
+                                value={item.label}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  updateCurrentYear(y => {
+                                    const currentMatch = [...(y.miniGame.matchData || [])];
+                                    currentMatch[idx] = { ...currentMatch[idx], label: val };
+                                    return { ...y, miniGame: { ...y.miniGame, matchData: currentMatch } };
+                                  });
+                                }}
+                                placeholder="Contoh: Senja Basah, Kopi Favorit..."
+                                className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs font-medium"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-[10px] text-charcoal-muted block mb-1">
+                                Pilihan Simbol Ikon
+                              </label>
+                              <select
+                                value={item.iconName}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  updateCurrentYear(y => {
+                                    const currentMatch = [...(y.miniGame.matchData || [])];
+                                    currentMatch[idx] = { ...currentMatch[idx], iconName: val };
+                                    return { ...y, miniGame: { ...y.miniGame, matchData: currentMatch } };
+                                  });
+                                }}
+                                className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs font-medium cursor-pointer"
+                              >
+                                {AVAILABLE_MATCH_ICONS.map((opt) => (
+                                  <option key={opt.name} value={opt.name}>
+                                    {opt.label} ({opt.name})
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+
+                          {/* Quick Icon Selector Chips */}
+                          <div>
+                            <label className="text-[9px] text-charcoal-subtle block mb-1">
+                              Klik Cepat Simbol:
+                            </label>
+                            <div className="flex flex-wrap gap-1.5">
+                              {AVAILABLE_MATCH_ICONS.map((opt) => {
+                                const isSelected = item.iconName === opt.name;
+                                return (
+                                  <button
+                                    key={opt.name}
+                                    type="button"
+                                    onClick={() => {
+                                      updateCurrentYear(y => {
+                                        const currentMatch = [...(y.miniGame.matchData || [])];
+                                        currentMatch[idx] = { ...currentMatch[idx], iconName: opt.name };
+                                        return { ...y, miniGame: { ...y.miniGame, matchData: currentMatch } };
+                                      });
+                                    }}
+                                    title={opt.label}
+                                    className={`p-1.5 rounded-lg border flex items-center justify-center transition-all cursor-pointer ${
+                                      isSelected
+                                        ? 'bg-rose-accent text-white border-rose-accent shadow-xs'
+                                        : 'bg-cream-50 hover:bg-cream-100 border-cream-200 text-charcoal-muted'
+                                    }`}
+                                  >
+                                    {renderMatchIconPreview(opt.name, 14)}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 
