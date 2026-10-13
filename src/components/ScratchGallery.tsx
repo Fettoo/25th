@@ -14,11 +14,8 @@ export const ScratchGallery: React.FC<ScratchGalleryProps> = ({ photos, year }) 
       <div className="flex items-center justify-between mb-3 px-1">
         <div>
           <span className="text-[10px] uppercase tracking-[0.25em] text-rose-hover font-semibold block">
-            GALERI KENANGAN
+            MEMORIES
           </span>
-          <h2 className="font-serif text-lg font-medium text-charcoal">
-            Foto & Video Tersembunyi
-          </h2>
         </div>
         <div className="flex items-center gap-1 text-[11px] text-charcoal-muted font-mono bg-cream-100 px-2.5 py-1 rounded-full border border-cream-200">
           <Sparkles size={11} strokeWidth={1.5} className="text-rose-accent" />

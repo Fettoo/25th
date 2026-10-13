@@ -571,10 +571,10 @@
     "title": "Harmoni Sehari-hari",
     "subtitle": "Menemukan keindahan luar biasa di dalam rutinitas yang sederhana",
     "song": {
-      "title": "Everyday Serenade",
-      "fileName": "everyday-serenade-2023.mp3",
-      "artist": "Melodic Echoes",
-      "audioUrl": "./audio/2023.mp3",
+      "title": "Bicara",
+      "fileName": "TheOvertunes - Bicara ft. Monita Tahalea (Lyric Video).mp3",
+      "artist": "The Overtunes",
+      "audioUrl": "./audio/TheOvertunes_-_Bicara_ft._Monita_Tahalea__Lyric_Video_.mp3",
       "synthTheme": "hopeful"
     },
     "photos": [
@@ -634,10 +634,10 @@
       }
     ],
     "wish": {
-      "themeTitle": "Rumah Di Dalam Manusia",
-      "authorNote": "Dedikasi ketenangan 2023",
-      "shortWish": "Bukan tempat yang membuat sebuah rumah terasa nyaman, melainkan dengan siapa kita pulang.",
-      "longWish": "Tahun 2023 membuktikan bahwa hal-hal paling romantis bukanlah kejutan mewah yang sesekali, melainkan kesetiaan pada rutinitas harian. Menyiapkan sarapan bersama, obrolan sebelum tidur tentang hal-hal sepele, dan tatapan saling memahami tanpa perlu penjelasan panjang. Bersamamu, hal-hal biasa berubah menjadi luar biasa."
+      "themeTitle": "Ternyata Rumah",
+      "authorNote": "",
+      "shortWish": "Bukan tempat yang membuat terasa nyaman, melainkan dengan siapa kita pulang.",
+      "longWish": "Tahun 2023 mungkin makin berat yaaa, cuman kita bisa lewatin kan, yaa gini aja yap ke6 untuk birthday mu yang masih ada aku, so lanjut aja"
     },
     "miniGame": {
       "type": "memory-match",
@@ -647,18 +647,18 @@
       "matchData": [
         {
           "id": 1,
-          "label": "Sarapan Pagi",
-          "iconName": "Utensils"
+          "label": "Nyaman",
+          "iconName": "Moon"
         },
         {
           "id": 2,
-          "label": "Lentera Malam",
-          "iconName": "Lamp"
+          "label": "Rindu",
+          "iconName": "Heart"
         },
         {
           "id": 3,
-          "label": "Buku Harian",
-          "iconName": "BookOpen"
+          "label": "Ternyata Rumah",
+          "iconName": "MapPin"
         }
       ]
     }
@@ -669,40 +669,60 @@
     "title": "Mengukir Jejak Bersama",
     "subtitle": "Melihat impian-impian masa lalu yang satu per satu mewujud nyata",
     "song": {
-      "title": "Milestone Journey",
-      "fileName": "milestone-journey-2024.mp3",
-      "artist": "Bright Horizon",
-      "audioUrl": "./audio/2024.mp3",
+      "title": "Fana Merah Jambu",
+      "fileName": "Fana Merah Jambu.mp3",
+      "artist": "Fourtwnty",
+      "audioUrl": "./audio/Fana_Merah_Jambu.mp3",
       "synthTheme": "joyful"
     },
     "photos": [
       {
         "id": "2024-01",
-        "title": "Pencapaian Baru",
-        "date": "Mei 2024",
-        "caption": "Melihat kerja keras dan dedikasimu membuahkan hasil yang membanggakan.",
-        "location": "Panggung Syukur",
-        "imageUrl": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2024",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_17.07.10.mp4",
+        "mediaType": "video"
       },
       {
         "id": "2024-02",
-        "title": "Di Bawah Bintang-Bintang",
-        "date": "Desember 2024",
-        "caption": "Menatap langit malam dan bersyukur telah sampai sejauh ini tanpa pernah melepaskan genggaman.",
-        "location": "Puncak Malam",
-        "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2024",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_17.07.10__2_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2024-03",
+        "title": "",
+        "date": "2024",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_17.07.10__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2024-04",
+        "title": "",
+        "date": "2024",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_17.07.10.webp",
+        "mediaType": "image"
       }
     ],
     "wish": {
-      "themeTitle": "Kebanggaan Yang Tak Terhingga",
-      "authorNote": "Rasa bangga 2024",
-      "shortWish": "Melihatmu bersinar adalah salah satu kebahagiaan terbesar dalam hidupku.",
-      "longWish": "Tahun 2024 adalah tahun pembuktian. Sophie membuktikan betapa tangguh dan berdedikasinya dirimu dalam mengejar cita-cita. Saat kau lelah, kau tetap tersenyum. Saat ada rintangan, kau menghadapinya dengan kepala tegak. Aku sangat bangga menjadi orang yang bisa menyaksikan semua pertumbuhan ini dari barisan terdepan."
+      "themeTitle": "Penantian",
+      "authorNote": "",
+      "shortWish": "Melihatmu bahagia adalah salah satu kebahagiaan terbesar dalam hidupku.",
+      "longWish": "Tahun 2024 adalah terberat yang kita lewati. ABCD datang tapi toh juga lewat akhirnya dan ku selalu hadir untukmu. ke7 kali birthdaymu ku selalu ada yeaa its me"
     },
     "miniGame": {
-      "type": "word-unscramble",
-      "title": "Rangkaian Janji Suci",
-      "instructions": "Susun huruf acak berikut untuk merangkai satu kata komitmen kita.",
+      "type": "memory-match",
+      "title": "Percaya aja",
+      "instructions": "Penyesuaian",
       "badgeLabel": "BABAK 07 JANJI",
       "wordData": {
         "letters": [
@@ -718,7 +738,45 @@
         ],
         "answer": "SELAMANYA",
         "hint": "Kata penutup dari setiap doa tulus tentang perjalanan cinta."
-      }
+      },
+      "matchData": [
+        {
+          "id": 1,
+          "label": "Masa lalu",
+          "iconName": "Film"
+        },
+        {
+          "id": 2,
+          "label": "Keberanian",
+          "iconName": "Star"
+        },
+        {
+          "id": 3,
+          "label": "Bersama",
+          "iconName": "Sparkles"
+        }
+      ],
+      "finalData": {
+        "title": "Sophie Grisella Olivia 25th Milestone",
+        "dedication": "Didedikasikan untuk wanita paling istimewa",
+        "letterLines": [
+          "Delapan tahun perjalanan telah terangkum indah dalam lembaran ini.",
+          "Selamat Ulang Tahun ke-25, Sophie Grisella Olivia."
+        ]
+      },
+      "quizData": [
+        {
+          "question": "Pertanyaan kenangan tentang tahun 2024",
+          "options": [
+            "Pilihan Jawaban A",
+            "Pilihan Jawaban B",
+            "Pilihan Jawaban C",
+            "Pilihan Jawaban D"
+          ],
+          "correctIndex": 0,
+          "hint": ""
+        }
+      ]
     }
   },
   {
@@ -727,40 +785,42 @@
     "title": "Ambang Seperempat Abad",
     "subtitle": "Mempersiapkan hati menyongsong usia penuh kematangan dan karunia",
     "song": {
-      "title": "Quarter Century Dawn",
-      "fileName": "quarter-century-dawn-2025.mp3",
-      "artist": "Subtle Radiance",
-      "audioUrl": "./audio/2025.mp3",
+      "title": "Menarilah Sendiriku",
+      "fileName": "Menarilah Sendiriku.mp3",
+      "artist": "Angsa & Serigala",
+      "audioUrl": "./audio/Menarilah_Sendiriku.mp3",
       "synthTheme": "radiant"
     },
     "photos": [
       {
-        "id": "2025-01",
-        "title": "Senyum Kedewasaan",
-        "date": "Maret 2025",
-        "caption": "Pancaran ketenangan seorang wanita yang tahu apa yang ia tuju.",
-        "location": "Kala Fajar",
-        "imageUrl": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80"
+        "id": "2025-02",
+        "title": "",
+        "date": "2025",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_17.29.10.webp",
+        "mediaType": "image"
       },
       {
         "id": "2025-02",
-        "title": "Perjalanan Menuju 25",
-        "date": "September 2025",
-        "caption": "Setiap langkah yang terlewati adalah bukti bahwa cinta ini berakar kuat.",
-        "location": "Jalan Setapak",
-        "imageUrl": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2025",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_17.29.10__1_.webp",
+        "mediaType": "image"
       }
     ],
     "wish": {
-      "themeTitle": "Menyongsong Babak Perak",
-      "authorNote": "Antisipasi menuju 25",
+      "themeTitle": "Menyongsong Babak Baru",
+      "authorNote": "",
       "shortWish": "Semakin bertambah usiamu, semakin jelas bahwa hatimu adalah tempat terbaik di dunia.",
-      "longWish": "Tahun 2025 menjadi jembatan menuju perayaan besar. Menatap ke belakang dari tahun 2018 hingga detik ini, rasanya seperti membaca novel yang setiap lembarnya ditulis dengan cinta, pengorbanan, dan tawa. Sophie Grisella Olivia, kau telah tumbuh menjadi sosok yang begitu luar biasa. Tidak ada hal yang lebih kurindukan selain terus mendampingimu di setiap babak selanjutnya."
+      "longWish": "Tahun 2025 menjadi ketapel yang merubah arah segalanya, ke8 kali ku masih hadir disampingmu saat birthday dan masih percaya untuk bersama"
     },
     "miniGame": {
       "type": "quiz",
-      "title": "Refleksi Perjalanan 8 Tahun",
-      "instructions": "Selesaikan pertanyaan refleksi ini untuk membuka babak puncak tahun 2026.",
+      "title": "Refleksi Perjalanan 8 Tahun anjayy",
+      "instructions": "coba tebak jawabanya apa, udah puyeng nyari pertanyaan",
       "badgeLabel": "BABAK 08 REFLEKSI",
       "quizData": [
         {
@@ -783,50 +843,44 @@
     "title": "Sophie Grisella Olivia 25th",
     "subtitle": "Selamat Ulang Tahun Ke-25, Jiwa Terindah yang Selalu Kucintai",
     "song": {
-      "title": "Sophie 25th Anthem",
-      "fileName": "sophie-25th-anthem-2026.mp3",
-      "artist": "Symphony of Grace",
-      "audioUrl": "./audio/2026.mp3",
+      "title": "I Will Spend My Whole Life Loving You",
+      "fileName": "I Will Spend My Whole Life Loving You - Kina Grannis & Imaginary Future.mp3",
+      "artist": " Kina Grannis & Imaginary Future",
+      "audioUrl": "./audio/I_Will_Spend_My_Whole_Life_Loving_You_-_Kina_Grannis___Imaginary_Future.mp3",
       "synthTheme": "celebration"
     },
     "photos": [
       {
-        "id": "2026-01",
-        "title": "Sang Bintang Hari Ini",
-        "date": "2026",
-        "caption": "Sophie Grisella Olivia di usia ke-25: Anggun, penuh cinta, dan selalu memesona.",
-        "location": "Hari Istimewa",
-        "imageUrl": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
-      },
-      {
         "id": "2026-02",
-        "title": "Perjalanan Yang Abadi",
-        "date": "Masa Kini & Masa Depan",
-        "caption": "Bukan akhir dari jurnal, melainkan awal dari lembaran baru yang lebih indah.",
-        "location": "Masa Depan Bersama",
-        "imageUrl": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"
+        "title": "Birthday lovely honey sweety baby girl",
+        "date": "Masa Depan",
+        "caption": "",
+        "location": "Cerminan Masa Depan",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_17.34.44.webp",
+        "mediaType": "image"
       }
     ],
     "wish": {
-      "themeTitle": "Surat Kasih Untuk Usia Ke-25",
+      "themeTitle": "Untuk seseorang yang bertambah usia ke-25",
       "authorNote": "Dari lubuk hati yang terdalam",
-      "shortWish": "Selamat ulang tahun ke-25, Sophie Grisella Olivia. Semoga dunia selalu bersikap lembut padamu seperti caramu memperlakukan hatiku.",
-      "longWish": "Sophie sayang, 25 tahun adalah tonggak yang sangat indah. Di usiamu yang seperempat abad ini, aku ingin kau tahu betapa berartinya dirimu bagi banyak orang, dan terutama bagiku. Terima kasih sudah lahir ke dunia ini. Terima kasih sudah memilih untuk terus berjalan bersamaku sejak 2018. Doaku selalu sama: semoga kesehatan, ketenangan batin, kebahagiaan yang melimpah, dan pencapaian impianmu selalu menyertai setiap hembusan napasmu. Apapun musim yang akan kita lalui nanti, tanganku akan selalu ada untuk kau genggam. Selamat ulang tahun ke-25, Sophie."
+      "shortWish": "Selamat ulang tahun ke-25, Sophie Grisella Olivia. ",
+      "longWish": "Ke9 kali aku masih hadir ternyata, gatau semesta kenapa masih kasih kesempatan apa karena cocok? apa mendukung? apa emang takdir? hmmm mari kita temukan jawabannya bersama. Hey girl happy birthday ya cantikku, buat diawal ku minta maaf dulu masih blom bisa buat bikin atau wujudin apapun itu yang kamu mau. Tapi ini percaya dan yakin ini adalah tahun terakhir, terakhir apa? yaa semuanya untuk yang belum sesuai. so buat kamu yang birthday hari ini, doaku tahun ini mungkin beberapa masih sama, ya walaupun ada beberapa yang beda. Semoga kamu bisa jaga emosimu mau itu ada yang trigger atau emang bad day mu tapi selagi kamu bisa kontrol itu semua, gada kata bad day atau bad moment, kamu udah semakin dewasa, semakin bisa kontrol pikiranmu dan makin ngerti apa itu bersyukur. terima kasih ya buat perubahan terbaikmu itu. ga muluk muluk, aku masih disini dan akan tetap disini. setengah tahun 2026 ku mulai gas dan dari awal 2027 nanti gas ku makin maksimal karena itu semua buat kamu. udah itu aja, pastinya ya doa terbaik buat kamu seorang dan rasa sayang cinta hormat pengertian juga buat kamu. once again happy for you, if you think bad date but i think this date always make me smile, so always be grateful for what is around you. 🤟"
     },
     "miniGame": {
       "type": "final-celebration",
-      "title": "Kapsul Kenangan & Doa 25 Tahun",
+      "title": "25 Tahun",
       "instructions": "Buka kapsul waktu 25 tahun untuk meresmikan jurnal kenangan abadi ini.",
       "badgeLabel": "BABAK PUNCAK",
       "finalData": {
-        "title": "Sophie Grisella Olivia 25th Milestone",
+        "title": "Sophie Grisella Olivia 25th",
         "dedication": "Didedikasikan untuk wanita paling istimewa",
         "letterLines": [
-          "Delapan tahun perjalanan telah terangkum dalam lembaran ini.",
-          "Dari perkenalan malu-malu di tahun 2018, hingga kedewasaan penuh rahmat di tahun 2026.",
+          "Delapan tahun perjalanan dan 9 kali birthday mu.",
+          "Dari perkenalan malu-malu di tahun 2018, hingga semakin tau apa itu arti rasa sayang dan memiliki yang sesungguhnya",
           "Setiap goresan foto, setiap lagu yang mengalun, adalah saksi bisu kasih sayang yang tak pernah luntur.",
-          "Semoga usia ke-25 ini menjadi awal dari babak kehidupan yang paling membahagiakan untukmu.",
-          "Selamat Ulang Tahun, Sophie Grisella Olivia."
+          "Semoga usia ke-25 ini menjadi awal dan acuan dari dunia kehidupan yang naik turun hingga akhirnya membahagiakan untukmu.",
+          "",
+          "Selamat Ulang Tahun, Sophie Grisella Olivia - Fetto"
         ]
       }
     }

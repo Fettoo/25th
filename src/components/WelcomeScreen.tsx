@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ArrowRight, BookOpen, Music, HeartHandshake } from 'lucide-react';
+import { Sparkles, ArrowRight, BookOpen } from 'lucide-react';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -15,7 +15,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
         </span>
         <div className="flex items-center gap-1.5 text-rose-accent">
           <Sparkles size={16} strokeWidth={1.5} />
-          <span className="text-[11px] tracking-widest uppercase font-semibold">2018 — 2026</span>
+          <span className="text-[11px] tracking-widest uppercase font-semibold">2026</span>
         </div>
       </div>
 
@@ -39,22 +39,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
         <div className="w-12 h-[1px] bg-bronze-overlay/60 my-4" />
 
         <p className="text-sm text-charcoal-muted leading-relaxed max-w-[340px] font-normal">
-          Sebuah rekap perjalanan waktu, foto tersembunyi yang menunggu untuk digosok, harmoni musik di setiap tahun, dan surat kasih di setiap persimpangan cerita.
+          Welcome to the 25th edition of Sophie Grisella Olivia's journal, a special collection of memories and reflections from the past year. Explore the chapters, unlock hidden moments, and relive the experiences that shaped this remarkable journey.
         </p>
-
-        {/* Feature Badges */}
-        <div className="grid grid-cols-2 gap-3 mt-8 w-full max-w-[320px] text-left">
-          <div className="p-3.5 rounded-2xl bg-cream-100/70 border border-cream-200/60 shadow-card">
-            <Music size={16} strokeWidth={1.5} className="text-charcoal mb-2" />
-            <p className="text-[11px] font-semibold tracking-wide text-charcoal">Soundtrack Tahunan</p>
-            <p className="text-[10px] text-charcoal-muted mt-0.5">Lagu berbeda di setiap babak</p>
-          </div>
-          <div className="p-3.5 rounded-2xl bg-cream-100/70 border border-cream-200/60 shadow-card">
-            <HeartHandshake size={16} strokeWidth={1.5} className="text-charcoal mb-2" />
-            <p className="text-[11px] font-semibold tracking-wide text-charcoal">Scratch & Mini-Game</p>
-            <p className="text-[10px] text-charcoal-muted mt-0.5">Buka babak dengan kenangan</p>
-          </div>
-        </div>
       </div>
 
       {/* Action Footer */}
@@ -66,10 +52,6 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           <span>MULAI PERJALANAN</span>
           <ArrowRight size={16} strokeWidth={1.5} />
         </button>
-
-        <p className="text-[11px] text-charcoal-subtle mt-4 text-center tracking-wide">
-          Sentuh tombol untuk memutar soundtrack otomatis & membuka jurnal
-        </p>
       </div>
     </div>
   );

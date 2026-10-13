@@ -465,6 +465,69 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
             </div>
           )}
 
+          {/* Header Informasi Babak Tahun: Chapter, Title, & Subtitle */}
+          <div className="p-3.5 rounded-2xl bg-cream-100/90 border border-cream-200/90 shadow-xs space-y-2.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-rose-hover font-semibold text-xs">
+                <Sparkles size={13} strokeWidth={1.5} className="text-rose-accent" />
+                <span className="uppercase tracking-wider">JUDUL & SUBJUDUL TAHUN {currentYear.year}</span>
+              </div>
+              <span className="text-[10px] font-mono text-charcoal-subtle bg-white/90 px-2 py-0.5 rounded border border-cream-200">
+                Tampil di bagian paling atas jurnal
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="sm:col-span-1">
+                <label className="text-[10px] font-medium text-charcoal-muted block mb-1">
+                  Babak (Chapter)
+                </label>
+                <input
+                  type="text"
+                  value={currentYear.chapter}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    updateCurrentYear(y => ({ ...y, chapter: val }));
+                  }}
+                  placeholder="CHAPTER 01"
+                  className="w-full bg-white px-2.5 py-1.5 rounded-xl border border-cream-200 text-xs font-mono font-semibold text-rose-hover shadow-xs"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="text-[10px] font-medium text-charcoal-muted block mb-1">
+                  Judul Utama Tahun (Title)
+                </label>
+                <input
+                  type="text"
+                  value={currentYear.title}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    updateCurrentYear(y => ({ ...y, title: val }));
+                  }}
+                  placeholder="Contoh: Dalam Jarak dan Doa"
+                  className="w-full bg-white px-3 py-1.5 rounded-xl border border-cream-200 text-sm font-serif font-medium text-charcoal shadow-xs"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[10px] font-medium text-charcoal-muted block mb-1">
+                Subjudul Kenangan (Subtitle)
+              </label>
+              <input
+                type="text"
+                value={currentYear.subtitle}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  updateCurrentYear(y => ({ ...y, subtitle: val }));
+                }}
+                placeholder="Contoh: Dunia melambat, namun rasa kita tumbuh semakin tabah"
+                className="w-full bg-white px-3 py-1.5 rounded-xl border border-cream-200 text-xs text-charcoal-muted leading-relaxed shadow-xs"
+              />
+            </div>
+          </div>
+
           {/* ----------------- TAB: FOTO KENANGAN ----------------- */}
           {activeTab === 'photos' && (
             <div className="space-y-4">
@@ -878,9 +941,43 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
               </div>
 
               <div className="p-4 rounded-2xl bg-cream-100/70 border border-cream-200 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pb-2 border-b border-cream-200">
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-medium text-charcoal-muted block">
+                      Judul Utama Tahun (Title)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentYear.title}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        updateCurrentYear(y => ({ ...y, title: val }));
+                      }}
+                      placeholder="Contoh: Dalam Jarak dan Doa"
+                      className="w-full bg-white px-3 py-1.5 rounded-xl border border-cream-200 text-sm font-serif font-medium"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-medium text-charcoal-muted block">
+                      Subjudul Kenangan (Subtitle)
+                    </label>
+                    <input
+                      type="text"
+                      value={currentYear.subtitle}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        updateCurrentYear(y => ({ ...y, subtitle: val }));
+                      }}
+                      placeholder="Contoh: Dunia melambat, namun rasa kita tumbuh semakin tabah"
+                      className="w-full bg-white px-3 py-1.5 rounded-xl border border-cream-200 text-xs font-normal"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-1">
                   <label className="text-[11px] font-medium text-charcoal-muted block">
-                    Judul Tema Babak
+                    Judul Tema Babak (Theme Title)
                   </label>
                   <input
                     type="text"
