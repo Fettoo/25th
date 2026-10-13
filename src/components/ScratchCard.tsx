@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { Eye, MapPin, Calendar, Sparkles, Film, Camera, Volume2, VolumeX, Maximize2 } from 'lucide-react';
+import { Eye, MapPin, Calendar, Sparkles, Film, Camera, Volume2, VolumeX, Maximize2, Play } from 'lucide-react';
 import { MemoryPhoto } from '../types';
 
 interface ScratchCardProps {
@@ -22,6 +22,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
   const [isScratching, setIsScratching] = useState(false);
   const [isFullViewOpen, setIsFullViewOpen] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [fitMode, setFitMode] = useState<'cover' | 'contain'>('cover');
   const lastPosRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -29,6 +30,29 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
   const isVideo = photo.mediaType === 'video' ||
     Boolean(photo.imageUrl && photo.imageUrl.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) ||
     Boolean(photo.imageUrl && photo.imageUrl.startsWith('data:video/'));
+
+  // Autoplay video helper
+  const startVideoPlayback = useCallback(() => {
+    if (!videoRef.current) return;
+    videoRef.current.currentTime = 0;
+    videoRef.current.muted = true; // Muted is mandatory for mobile browser autoplay
+    setIsVideoMuted(true);
+    
+    const playPromise = videoRef.current.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsVideoPlaying(true))
+        .catch(() => {
+          // If prevented, retry muted
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play()
+              .then(() => setIsVideoPlaying(true))
+              .catch(() => setIsVideoPlaying(false));
+          }
+        });
+    }
+  }, []);
 
   // Initialize canvas overlay
   const initCanvas = useCallback(() => {
@@ -85,14 +109,12 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
     }
   }, [initCanvas, isCleared]);
 
-  // Autoplay video when cleared
+  // Autoplay video immediately when card is cleared
   useEffect(() => {
-    if (isCleared && isVideo && videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay policy fallback
-      });
+    if (isCleared && isVideo) {
+      startVideoPlayback();
     }
-  }, [isCleared, isVideo]);
+  }, [isCleared, isVideo, startVideoPlayback]);
 
   // Calculate scratched area percentage (> 50% triggers auto-clear)
   const checkScratchPercentage = () => {
@@ -131,6 +153,9 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
     if (percent >= 50 && !isCleared) {
       setIsCleared(true);
       onPhotoCleared?.(photo.id);
+      if (isVideo) {
+        startVideoPlayback();
+      }
     }
   };
 
@@ -185,6 +210,26 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
     checkScratchPercentage();
   };
 
+  const toggleVideoPlay = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play()
+        .then(() => setIsVideoPlaying(true))
+        .catch(() => {});
+    } else {
+      videoRef.current.pause();
+      setIsVideoPlaying(false);
+    }
+  };
+
+  const toggleVideoMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    const nextMuted = !isVideoMuted;
+    videoRef.current.muted = nextMuted;
+    setIsVideoMuted(nextMuted);
+  };
+
   return (
     <>
       <div className="bg-cream-100 rounded-card p-4 border border-cream-200/80 shadow-soft transition-all duration-300">
@@ -226,17 +271,34 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
 
           {/* Media Element: Photo Image or Video Clip */}
           {isVideo ? (
-            <video
-              ref={videoRef}
-              src={photo.imageUrl}
-              muted={isVideoMuted}
-              playsInline
-              loop
-              preload="metadata"
-              className={`relative z-0 w-full h-full select-none transition-all duration-300 ${
-                fitMode === 'cover' ? 'object-cover' : 'object-contain'
-              }`}
-            />
+            <div 
+              className="relative w-full h-full flex items-center justify-center cursor-pointer"
+              onClick={isCleared ? toggleVideoPlay : undefined}
+            >
+              <video
+                ref={videoRef}
+                src={photo.imageUrl}
+                muted={isVideoMuted}
+                playsInline
+                loop
+                autoPlay={isCleared}
+                preload="auto"
+                onPlay={() => setIsVideoPlaying(true)}
+                onPause={() => setIsVideoPlaying(false)}
+                className={`w-full h-full select-none transition-all duration-300 ${
+                  fitMode === 'cover' ? 'object-cover' : 'object-contain'
+                }`}
+              />
+
+              {/* Video Paused Indicator Overlay when cleared */}
+              {isCleared && !isVideoPlaying && (
+                <div className="absolute inset-0 bg-charcoal/20 flex items-center justify-center pointer-events-none">
+                  <div className="w-10 h-10 rounded-full bg-cream-50/90 text-charcoal flex items-center justify-center shadow-md">
+                    <Play size={16} strokeWidth={2} className="ml-0.5" />
+                  </div>
+                </div>
+              )}
+            </div>
           ) : (
             <img
               src={photo.imageUrl}
@@ -272,7 +334,10 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
             <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5">
               {/* Fit Mode Toggle */}
               <button
-                onClick={() => setFitMode(prev => prev === 'cover' ? 'contain' : 'cover')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFitMode(prev => prev === 'cover' ? 'contain' : 'cover');
+                }}
                 aria-label="Ubah mode proporsi kotak"
                 title="Sesuaikan ukuran kotak"
                 className="px-2 py-1 rounded-full bg-cream-50/90 hover:bg-cream-100 text-charcoal text-[10px] font-medium flex items-center gap-1 shadow-sm backdrop-blur-xs transition-colors cursor-pointer"
@@ -284,7 +349,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
               {/* Video Audio Unmute Toggle */}
               {isVideo && (
                 <button
-                  onClick={() => setIsVideoMuted(!isVideoMuted)}
+                  onClick={toggleVideoMute}
                   aria-label={isVideoMuted ? "Aktifkan suara video" : "Bisukan suara video"}
                   className="p-1 rounded-full bg-cream-50/90 hover:bg-cream-100 text-charcoal shadow-sm backdrop-blur-xs transition-colors cursor-pointer"
                 >
@@ -294,7 +359,10 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
 
               {/* Expand Full View Modal Button */}
               <button
-                onClick={() => setIsFullViewOpen(true)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsFullViewOpen(true);
+                }}
                 aria-label="Lihat media penuh"
                 className="px-2.5 py-1 rounded-full bg-cream-50/90 hover:bg-cream-100 text-charcoal text-[10px] font-medium tracking-wide flex items-center gap-1 shadow-sm backdrop-blur-xs transition-colors cursor-pointer"
               >

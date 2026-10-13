@@ -26,6 +26,7 @@ import {
   exportJournalDataAsFile, 
   resetJournalDataToDefault 
 } from '../data/journalData';
+import { compressImageFile, formatFileSize } from '../utils/mediaCompressor';
 
 interface StudioDashboardProps {
   isOpen: boolean;
@@ -96,17 +97,30 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
     }
   };
 
-  // Upload Photo or Video handler
+  // Upload Photo or Video handler with automatic compression
   const handleUploadMedia = async (e: React.ChangeEvent<HTMLInputElement>, photoIndex?: number) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const isVideoFile = file.type.startsWith('video/') || Boolean(file.name.match(/\.(mp4|webm|ogg|mov)$/i));
-    const targetMediaType = isVideoFile ? 'video' : 'photo';
 
     try {
-      setSaveStatus({ message: `Sedang mengunggah ${file.name}...`, type: 'info' });
-      const uploadRes = await uploadMediaAsset(file, targetMediaType);
+      let fileToUpload = file;
+      let compressionInfo = '';
+
+      if (!isVideoFile) {
+        setSaveStatus({ message: `Sedang mengoptimasi & mengompresi foto ${file.name}...`, type: 'info' });
+        const result = await compressImageFile(file);
+        fileToUpload = result.file;
+        if (result.reductionPercentage > 0) {
+          compressionInfo = ` (${formatFileSize(result.originalSize)} -> ${formatFileSize(result.compressedSize)}, hemat ${result.reductionPercentage}%)`;
+        }
+      } else {
+        setSaveStatus({ message: `Sedang memproses video ${file.name} (${formatFileSize(file.size)})...`, type: 'info' });
+      }
+
+      const targetMediaType = isVideoFile ? 'video' : 'photo';
+      const uploadRes = await uploadMediaAsset(fileToUpload, targetMediaType);
 
       updateCurrentYear(year => {
         const photos = [...year.photos];
@@ -134,12 +148,12 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
 
       setSaveStatus({
         message: uploadRes.isLocalFile 
-          ? `${isVideoFile ? 'Video' : 'Foto'} ${file.name} berhasil disimpan ke public/${isVideoFile ? 'videos' : 'photos'}` 
-          : `${isVideoFile ? 'Video' : 'Foto'} ${file.name} berhasil dimuat sebagai data media`,
+          ? `${isVideoFile ? 'Video' : 'Foto'} ${file.name} berhasil disimpan ke public/${isVideoFile ? 'videos' : 'photos'}${compressionInfo}` 
+          : `${isVideoFile ? 'Video' : 'Foto'} ${file.name} berhasil dimuat sebagai data media${compressionInfo}`,
         type: 'success'
       });
     } catch {
-      setSaveStatus({ message: `Gagal mengunggah ${isVideoFile ? 'video' : 'foto'}. Silakan coba lagi.`, type: 'error' });
+      setSaveStatus({ message: `Gagal memproses ${isVideoFile ? 'video' : 'foto'}. Silakan coba lagi.`, type: 'error' });
     }
   };
 
