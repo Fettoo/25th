@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Sophie Grisella Olivia 25th Journal</title>
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // Redirects /dashboard or other subpaths back to index.html with query parameter
+    var pathSegmentsToKeep = 0;
+    var l = window.location;
+    var isDashboard = l.pathname.toLowerCase().indexOf('dashboard') !== -1;
+    var redirectUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?' +
+      (isDashboard ? 'dashboard=true&' : '') +
+      'p=' + encodeURIComponent(l.pathname.slice(1)) +
+      (l.search ? '&q=' + encodeURIComponent(l.search.slice(1)) : '') +
+      l.hash;
+    window.location.replace(redirectUrl);
+  </script>
+</head>
+<body>
+</body>
+</html>
+
