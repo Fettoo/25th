@@ -1037,8 +1037,8 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
 
                         if (newType === 'cipher-code' && !mg.cipherData) {
                           mg.cipherData = {
-                            targetCode: '1806',
-                            prompt: 'Masukkan 4 digit PIN kenangan',
+                            targetCode: '180620',
+                            prompt: 'Masukkan hingga 6 digit PIN kenangan',
                             hint: 'Tanggal atau angka momen spesial'
                           };
                         }
@@ -1396,27 +1396,31 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   <div className="p-3.5 rounded-xl bg-white border border-cream-200 space-y-3 shadow-xs">
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase">
-                        KODE PIN RAHASIA
+                        KODE PIN RAHASIA (MAKSIMAL 6 DIGIT)
                       </span>
                       <span className="text-[10px] text-charcoal-muted">
-                        Pemain harus memasukkan 4 angka PIN ini untuk membuka tahun berikutnya
+                        Pemain harus memasukkan angka PIN (hingga 6 digit) untuk membuka tahun berikutnya
                       </span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                       <div>
-                        <label className="text-[10px] text-charcoal-muted block mb-1">Target Angka PIN</label>
+                        <label className="text-[10px] text-charcoal-muted block mb-1">
+                          Target Angka PIN (Maksimal 6 Digit Angka)
+                        </label>
                         <input
                           type="text"
+                          inputMode="numeric"
+                          maxLength={6}
                           value={currentYear.miniGame.cipherData?.targetCode || ''}
                           onChange={(e) => {
-                            const val = e.target.value;
+                            const val = e.target.value.replace(/\D/g, '').slice(0, 6);
                             updateCurrentYear(y => ({
                               ...y,
                               miniGame: {
                                 ...y.miniGame,
                                 cipherData: {
-                                  prompt: y.miniGame.cipherData?.prompt || 'Masukkan 4 digit PIN kenangan',
+                                  prompt: y.miniGame.cipherData?.prompt || `Masukkan ${val.length || 6} digit PIN kenangan`,
                                   hint: y.miniGame.cipherData?.hint || 'Tanggal atau angka momen spesial',
                                   ...y.miniGame.cipherData,
                                   targetCode: val
@@ -1424,34 +1428,68 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                               }
                             }));
                           }}
-                          placeholder="Contoh: 1806"
-                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 font-mono text-sm"
+                          placeholder="Contoh: 180620 (1 - 6 digit)"
+                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 font-mono text-sm tracking-widest font-semibold"
                         />
+                        <span className="text-[9px] text-charcoal-subtle mt-1 block font-mono">
+                          Panjang PIN saat ini: {(currentYear.miniGame.cipherData?.targetCode || '').length}/6 digit (bisa 4, 5, atau 6 digit)
+                        </span>
                       </div>
 
-                      <div>
-                        <label className="text-[10px] text-charcoal-muted block mb-1">Petunjuk Bantuan (Hint)</label>
-                        <input
-                          type="text"
-                          value={currentYear.miniGame.cipherData?.hint || ''}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            updateCurrentYear(y => ({
-                              ...y,
-                              miniGame: {
-                                ...y.miniGame,
-                                cipherData: {
-                                  prompt: y.miniGame.cipherData?.prompt || 'Masukkan 4 digit PIN kenangan',
-                                  targetCode: y.miniGame.cipherData?.targetCode || '1806',
-                                  ...y.miniGame.cipherData,
-                                  hint: val
+                      <div className="space-y-2">
+                        <div>
+                          <label className="text-[10px] text-charcoal-muted block mb-1">
+                            Instruksi Layar Pemain (Prompt)
+                          </label>
+                          <input
+                            type="text"
+                            value={currentYear.miniGame.cipherData?.prompt || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => ({
+                                ...y,
+                                miniGame: {
+                                  ...y.miniGame,
+                                  cipherData: {
+                                    targetCode: y.miniGame.cipherData?.targetCode || '180620',
+                                    hint: y.miniGame.cipherData?.hint || 'Momen spesial',
+                                    ...y.miniGame.cipherData,
+                                    prompt: val
+                                  }
                                 }
-                              }
-                            }));
-                          }}
-                          placeholder="Petunjuk jika lupa PIN..."
-                          className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
-                        />
+                              }));
+                            }}
+                            placeholder="Contoh: Masukkan 6 digit tanggal jadian kita..."
+                            className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="text-[10px] text-charcoal-muted block mb-1">
+                            Petunjuk Bantuan Jika Salah (Hint)
+                          </label>
+                          <input
+                            type="text"
+                            value={currentYear.miniGame.cipherData?.hint || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => ({
+                                ...y,
+                                miniGame: {
+                                  ...y.miniGame,
+                                  cipherData: {
+                                    prompt: y.miniGame.cipherData?.prompt || 'Masukkan PIN kenangan',
+                                    targetCode: y.miniGame.cipherData?.targetCode || '180620',
+                                    ...y.miniGame.cipherData,
+                                    hint: val
+                                  }
+                                }
+                              }));
+                            }}
+                            placeholder="Petunjuk jika lupa PIN..."
+                            className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

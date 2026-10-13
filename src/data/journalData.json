@@ -15,7 +15,7 @@
       {
         "id": "2018-02",
         "title": "",
-        "date": "May 2018",
+        "date": "2018",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__1_.webp",
@@ -24,7 +24,7 @@
       {
         "id": "2018-01",
         "title": "",
-        "date": "June 2018",
+        "date": "2018",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35.webp",
@@ -33,7 +33,7 @@
       {
         "id": "2018-03",
         "title": "",
-        "date": "June 2018",
+        "date": "2018",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__2_.webp",
@@ -42,7 +42,7 @@
       {
         "id": "2018-07",
         "title": "",
-        "date": "June 2018",
+        "date": "2018",
         "caption": "",
         "location": "",
         "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36__1_.mp4",
@@ -51,7 +51,7 @@
       {
         "id": "2018-06",
         "title": "",
-        "date": "June 2018",
+        "date": "2018",
         "caption": "",
         "location": "",
         "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36.mp4",
@@ -60,7 +60,7 @@
       {
         "id": "2018-04",
         "title": "",
-        "date": "July 2018",
+        "date": "2018",
         "caption": "",
         "location": "Nama Tempat",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__3_.webp",
@@ -69,7 +69,7 @@
       {
         "id": "2018-05",
         "title": "",
-        "date": "August 2018",
+        "date": "2018",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__4_.webp",
@@ -129,7 +129,7 @@
       {
         "id": "2019-01",
         "title": "",
-        "date": "October 2019",
+        "date": "2019",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.11.webp",
@@ -138,7 +138,7 @@
       {
         "id": "2019-02",
         "title": "",
-        "date": "October 2019",
+        "date": "2019",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.12.webp",
@@ -147,7 +147,7 @@
       {
         "id": "2019-04",
         "title": "",
-        "date": "November 2019",
+        "date": "2019",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.13.webp",
@@ -156,7 +156,7 @@
       {
         "id": "2019-03",
         "title": "",
-        "date": "December 2019",
+        "date": "2019",
         "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.05.13__1_.webp",
@@ -165,7 +165,7 @@
       {
         "id": "2019-05",
         "title": "Judul Foto Kenangan",
-        "date": "October 2019",
+        "date": "2019",
         "caption": "",
         "location": "",
         "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.05.11.mp4",
@@ -174,7 +174,7 @@
       {
         "id": "2019-06",
         "title": "",
-        "date": "October 2019",
+        "date": "2019",
         "caption": "",
         "location": "",
         "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.05.12.mp4",
@@ -195,18 +195,18 @@
       "matchData": [
         {
           "id": 1,
-          "label": "Senja Basah",
-          "iconName": "CloudSun"
+          "label": "Nonton Konser",
+          "iconName": "Music"
         },
         {
           "id": 2,
-          "label": "Kopi Favorit",
-          "iconName": "Coffee"
+          "label": "Liburan",
+          "iconName": "MapPin"
         },
         {
           "id": 3,
-          "label": "Lagu Rahasia",
-          "iconName": "Music"
+          "label": "Perkenalan",
+          "iconName": "Heart"
         }
       ]
     }
@@ -226,26 +226,100 @@
     "photos": [
       {
         "id": "2020-01",
-        "title": "Panggilan Layar Kaca",
-        "date": "Mei 2020",
-        "caption": "Meski terpisah dinding ruang, suaramu selalu menjadi penenang di hari yang panjang.",
-        "location": "Ruang Maya",
-        "imageUrl": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.54.47__1_.webp",
+        "mediaType": "image"
       },
       {
         "id": "2020-02",
-        "title": "Surat dan Pesan Panjang",
-        "date": "Oktober 2020",
-        "caption": "Ketika kata-kata tertulis menjadi jembatan terkuat antara dua hati.",
-        "location": "Meja Belajar",
-        "imageUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.54.47.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2020-03",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.54.48.jpeg",
+        "mediaType": "image"
+      },
+      {
+        "id": "2020-04",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.54.48.mp4",
+        "mediaType": "video"
+      },
+      {
+        "id": "2020-05",
+        "title": "",
+        "date": "Bulan 2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.52.33.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2020-06",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.52.34.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2020-08",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_15.52.36__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2020-09",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.52.33.mp4",
+        "mediaType": "video"
+      },
+      {
+        "id": "2020-10",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.52.35__1_.mp4",
+        "mediaType": "video"
+      },
+      {
+        "id": "2020-11",
+        "title": "",
+        "date": "2020",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_15.52.35.mp4",
+        "mediaType": "video"
       }
     ],
     "wish": {
       "themeTitle": "Keteguhan Di Tengah Badai",
-      "authorNote": "Pesan ketabahan 2020",
+      "authorNote": "",
       "shortWish": "Bahkan saat dunia diliputi ketidakpastian, hadirmu adalah satu-satunya hal yang pasti kurindukan.",
-      "longWish": "Tahun 2020 menguji banyak orang, termasuk kita. Jarak yang tercipta dan keterbatasan pertemuan membuat setiap kabar yang datang terasa seperti oasis. Tapi di tengah keheningan tahun itu, ketulusanmu justru terlihat paling terang. Terima kasih sudah tetap bertahan, tetap mendengarkan, dan tetap menjadi tempat berteduh di saat semuanya terasa berat."
+      "longWish": "Tahun 2020 menguji perasaan dan ketenangan, termasuk kita. kedekatan yang tercipta dan masa muda membuat masa - masa yang kita lewati diharuskan untuk beradaptasi satu sama lain, tapi pada akhirnya kita tetap saling pegangan terus. so tahun ketiga hadirku di birthdaymu dan tahun yang tetap menyenangkan untuk dikenang"
     },
     "miniGame": {
       "type": "word-unscramble",
@@ -254,19 +328,16 @@
       "badgeLabel": "BABAK 03 KATA KUNCI",
       "wordData": {
         "letters": [
-          "T",
-          "E",
-          "T",
-          "A",
           "P",
-          "S",
           "E",
-          "T",
-          "I",
+          "R",
+          "C",
+          "A",
+          "Y",
           "A"
         ],
-        "answer": "TETAPSETIA",
-        "hint": "Dua kata tanpa spasi: Sikap hati yang tak goyah meski waktu dan jarak menguji."
+        "answer": "PERCAYA",
+        "hint": "Satu kata : Sikap hati yang tak goyah dan pikiran menguji."
       }
     }
   },
@@ -276,40 +347,105 @@
     "title": "Kembali Bertemu Pandang",
     "subtitle": "Rasa syukur yang berlipat ganda atas setiap pertemuan",
     "song": {
-      "title": "Reunion Waltz",
-      "fileName": "reunion-waltz-2021.mp3",
-      "artist": "Gentle Harmony",
-      "audioUrl": "./audio/2021.mp3",
+      "title": "Kau",
+      "fileName": "Kau.mp3",
+      "artist": "Fiersa Besari",
+      "audioUrl": "./audio/Kau.mp3",
       "synthTheme": "warm"
     },
     "photos": [
       {
         "id": "2021-01",
-        "title": "Pertemuan Selepas Penantian",
-        "date": "April 2021",
-        "caption": "Menghirup kembali udara yang sama, merasakan debar yang tak pernah hilang.",
-        "location": "Stasiun Tua",
-        "imageUrl": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__7_.webp",
+        "mediaType": "image"
       },
       {
         "id": "2021-02",
-        "title": "Cahaya Senja Bersama",
-        "date": "Desember 2021",
-        "caption": "Langit jingga yang menyaksikan tawa kita kembali utuh.",
-        "location": "Tepi Dermaga",
-        "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__6_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-03",
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__5_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-04",
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__4_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-05",
+        "title": "",
+        "date": "Bulan 2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__2_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-06",
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__3_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-07",
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-08",
+        "title": "",
+        "date": "Bulan 2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.18.24.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2021-09",
+        "title": "",
+        "date": "2021",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_16.18.24.mp4",
+        "mediaType": "video"
       }
     ],
     "wish": {
       "themeTitle": "Syukur Atas Setiap Detik",
-      "authorNote": "Babak syukur 2021",
+      "authorNote": "",
       "shortWish": "Tidak ada yang lebih melegakan daripada menyadari bahwa orang yang kita sayangi tetap berada di samping kita.",
-      "longWish": "Tahun 2021 mengajarkan kita untuk tidak menyia-nyiakan momen sekecil apapun. Setiap kali bisa duduk di sampingmu, melihat tawamu secara langsung, dan mendengar suaramu tanpa terhalang sinyal, aku selalu mengucap syukur dalam hati. Sophie, kamu adalah bukti bahwa kesabaran selalu bermuara pada pelukan yang hangat."
+      "longWish": "Tahun 2021 mengajarkan kita untuk tidak menyia-nyiakan momen sekecil apapun. Setiap momen memang kadang tercipta untuk yang terakhir kali. tahun ke4 gaberasa dan tetep bareng, oke kita lanjut lagi"
     },
     "miniGame": {
-      "type": "quiz",
-      "title": "Trivia Momen Reuni",
-      "instructions": "Uji ingatan tentang momen-momen manis yang kembali kita rajut di tahun 2021.",
+      "type": "cipher-code",
+      "title": "Ingatan",
+      "instructions": "angka favorit fetto",
       "badgeLabel": "BABAK 04 TRIVIA",
       "quizData": [
         {
@@ -334,7 +470,12 @@
           "correctIndex": 3,
           "hint": "Tidak ada pilihan yang salah, semuanya adalah kebenaran."
         }
-      ]
+      ],
+      "cipherData": {
+        "prompt": "Masukkan 4 digit PIN kenangan",
+        "hint": " angka momen spesial",
+        "targetCode": "876691"
+      }
     }
   },
   {
@@ -343,45 +484,84 @@
     "title": "Kedewasaan dan Kompromi",
     "subtitle": "Tumbuh bersama bukan berarti tak pernah berbeda, melainkan saling memahami",
     "song": {
-      "title": "Maturity & Grace",
-      "fileName": "maturity-grace-2022.mp3",
-      "artist": "Warm Cello & Keys",
-      "audioUrl": "./audio/2022.mp3",
+      "title": "Aku Sedang Mencintaimu",
+      "fileName": "Maudy Ayunda - Aku Sedang Mencintaimu Official Lyric Video.mp3",
+      "artist": "Maudy Ayunda",
+      "audioUrl": "./audio/Maudy_Ayunda_-_Aku_Sedang_Mencintaimu_Official_Lyric_Video.mp3",
       "synthTheme": "dreamy"
     },
     "photos": [
       {
         "id": "2022-01",
-        "title": "Perjalanan Baru",
-        "date": "Juli 2022",
-        "caption": "Melangkah bersama menatap masa depan dengan pikiran yang lebih lapang.",
-        "location": "Kaki Bukit",
-        "imageUrl": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2022",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.42.50__3_.webp",
+        "mediaType": "image"
       },
       {
         "id": "2022-02",
-        "title": "Momen Refleksi",
-        "date": "November 2022",
-        "caption": "Di sudut jendela sore, merencanakan mimpi-mimpi yang mulai kita rangkai.",
-        "location": "Balkon Rumah",
-        "imageUrl": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2022",
+        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.42.50__2_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2022-03",
+        "title": "",
+        "date": "2022",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.42.50__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2022-04",
+        "title": "",
+        "date": "2022",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.42.50.webp",
+        "mediaType": "image"
       }
     ],
     "wish": {
       "themeTitle": "Tumbuh dan Melangkah Lebih Jauh",
-      "authorNote": "Renungan cinta 2022",
+      "authorNote": "",
       "shortWish": "Cinta kita menjadi lebih tenang, lebih dalam, dan tidak lagi memerlukan pembuktian berlebihan.",
-      "longWish": "Di tahun 2022, aku melihat Sophie yang semakin dewasa, anggun, dan bijaksana dalam menyikapi setiap persoalan hidup. Menemanimu berproses, melihat caramu berjuang untuk impianmu, membuat rasa kagumku berlipat ganda. Kita belajar memaafkan lebih cepat, mendengar lebih sabar, dan saling menguatkan saat salah satu dari kita sedang ragu."
+      "longWish": "Di tahun 2022, semua sudah dipaksa buat melangkah lebih jauh. 5 tahun yang berat tapi juga selalu bikin happy, tahun ke5 gada yang percaya tetap berjalan bersama. langsung saja goooo"
     },
     "miniGame": {
-      "type": "cipher-code",
-      "title": "Kombinasi Tanggal Spesial",
-      "instructions": "Masukkan 4 angka kode tanggal lahir Sophie (format tanggal DDMM atau angka 2022) untuk membuka kunci.",
+      "type": "word-unscramble",
+      "title": "Lovely",
+      "instructions": "susun aja coba bisa nggaaaaa",
       "badgeLabel": "BABAK 05 KODE KUNCI",
       "cipherData": {
         "targetCode": "2525",
         "prompt": "Dua angka sakral: Menuju usia perak ke-25 kita mengulang angka ini dua kali (Ketik: 2525)",
         "hint": "Angka tonggak usia ke-25 Sophie, ketik: 2525"
+      },
+      "finalData": {
+        "title": "Sophie Grisella Olivia 25th Milestone",
+        "dedication": "Didedikasikan untuk wanita paling istimewa",
+        "letterLines": [
+          "Delapan tahun perjalanan telah terangkum indah dalam lembaran ini.",
+          "Selamat Ulang Tahun ke-25, Sophie Grisella Olivia."
+        ]
+      },
+      "wordData": {
+        "answer": "CINTA",
+        "letters": [
+          "C",
+          "I",
+          "N",
+          "T",
+          "A"
+        ],
+        "hint": "Satu kata yang merangkum semua rasa"
       }
     }
   },
@@ -400,19 +580,57 @@
     "photos": [
       {
         "id": "2023-01",
-        "title": "Dapur dan Aroma Masakan",
-        "date": "Februari 2023",
-        "caption": "Eksperimen masakan kecil yang berakhir dengan tawa renyah berdua.",
-        "location": "Dapur Hangat",
-        "imageUrl": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2023",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.55.22.webp",
+        "mediaType": "image"
       },
       {
         "id": "2023-02",
-        "title": "Helaan Napas Lega",
-        "date": "Agustus 2023",
-        "caption": "Setelah seharian lelah dengan rutinitas, bahumu selalu menjadi sandaran terbaik.",
-        "location": "Sofa Ruang Tengah",
-        "imageUrl": "https://images.unsplash.com/photo-1506869648495-4331e9c56fa9?auto=format&fit=crop&w=800&q=80"
+        "title": "",
+        "date": "2023",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.55.22__1_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2023-03",
+        "title": "",
+        "date": "2023",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.55.22__2_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2023-04",
+        "title": "",
+        "date": "2023",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.55.22__3_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2023-05",
+        "title": "",
+        "date": "2023",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.55.22__4_.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2023-06",
+        "title": "",
+        "date": "2023",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_16.55.22__5_.webp",
+        "mediaType": "image"
       }
     ],
     "wish": {

@@ -540,14 +540,18 @@ const CipherCodeGame: React.FC<CipherCodeGameProps> = ({
   const [pin, setPin] = useState('');
   const [isWrong, setIsWrong] = useState(false);
 
+  // Allow up to 6 digits dynamically based on configured targetCode (default 4 if not set)
+  const targetCode = (cipherData.targetCode || '1806').trim().slice(0, 6);
+  const maxDigits = Math.min(6, Math.max(1, targetCode.length));
+
   const handleDigit = (digit: string) => {
-    if (pin.length >= 4) return;
+    if (pin.length >= maxDigits) return;
     const nextPin = pin + digit;
     setPin(nextPin);
     setIsWrong(false);
 
-    if (nextPin.length === cipherData.targetCode.length) {
-      if (nextPin === cipherData.targetCode) {
+    if (nextPin.length === maxDigits) {
+      if (nextPin === targetCode) {
         onComplete();
       } else {
         setIsWrong(true);
@@ -564,7 +568,7 @@ const CipherCodeGame: React.FC<CipherCodeGameProps> = ({
     return (
       <div className="p-3 rounded-inner bg-cream-50/60 border border-cream-200/80 text-center">
         <p className="text-xs text-charcoal-muted font-mono">
-          Kunci kombinasi telah terbuka dengan kode: {cipherData.targetCode}
+          Kunci kombinasi telah terbuka dengan kode: {targetCode}
         </p>
       </div>
     );
@@ -576,11 +580,25 @@ const CipherCodeGame: React.FC<CipherCodeGameProps> = ({
         {cipherData.prompt}
       </p>
 
-      {/* Code Display */}
-      <div className={`p-3 rounded-xl bg-white border text-center font-mono text-lg tracking-[0.5em] font-semibold mb-4 transition-colors ${
+      {/* Code Display: Individual digit boxes (up to 6 digits) */}
+      <div className={`py-3.5 px-3 rounded-xl bg-white border text-center mb-4 transition-colors flex items-center justify-center gap-2 sm:gap-2.5 ${
         isWrong ? 'border-rose-300 text-rose-900 bg-rose-soft/40' : 'border-cream-200 text-charcoal'
       }`}>
-        {pin.padEnd(4, '•')}
+        {Array.from({ length: maxDigits }).map((_, idx) => {
+          const char = pin[idx];
+          return (
+            <div
+              key={idx}
+              className={`w-9 h-11 sm:w-10 sm:h-12 rounded-lg flex items-center justify-center font-mono text-lg font-bold transition-all border ${
+                char
+                  ? 'bg-cream-100 border-rose-accent/40 text-charcoal shadow-xs scale-105'
+                  : 'bg-cream-50/60 border-cream-200 text-charcoal-subtle'
+              }`}
+            >
+              {char ? char : '•'}
+            </div>
+          );
+        })}
       </div>
 
       {/* Number Pad */}
