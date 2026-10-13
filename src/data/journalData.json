@@ -13,74 +13,74 @@
     },
     "photos": [
       {
-        "id": "2018-01",
-        "title": "Judul Foto Kenangan",
-        "date": "June 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
-        "location": "",
-        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35.webp",
-        "mediaType": "image"
-      },
-      {
         "id": "2018-02",
-        "title": "Judul Foto Kenangan",
+        "title": "",
         "date": "May 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__1_.webp",
         "mediaType": "image"
       },
       {
-        "id": "2018-03",
-        "title": "Judul Foto Kenangan",
+        "id": "2018-01",
+        "title": "",
         "date": "June 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35.webp",
+        "mediaType": "image"
+      },
+      {
+        "id": "2018-03",
+        "title": "",
+        "date": "June 2018",
+        "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__2_.webp",
         "mediaType": "image"
       },
       {
+        "id": "2018-07",
+        "title": "",
+        "date": "June 2018",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36__1_.mp4",
+        "mediaType": "video"
+      },
+      {
+        "id": "2018-06",
+        "title": "",
+        "date": "June 2018",
+        "caption": "",
+        "location": "",
+        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36.mp4",
+        "mediaType": "video"
+      },
+      {
         "id": "2018-04",
-        "title": "Judul Foto Kenangan",
+        "title": "",
         "date": "July 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "caption": "",
         "location": "Nama Tempat",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__3_.webp",
         "mediaType": "image"
       },
       {
         "id": "2018-05",
-        "title": "Judul Foto Kenangan",
+        "title": "",
         "date": "August 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
+        "caption": "",
         "location": "",
         "imageUrl": "./photos/WhatsApp_Image_2026-10-13_at_13.48.35__4_.webp",
         "mediaType": "image"
-      },
-      {
-        "id": "2018-06",
-        "title": "Judul Foto Kenangan",
-        "date": "June 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
-        "location": "",
-        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36.mp4",
-        "mediaType": "video"
-      },
-      {
-        "id": "2018-07",
-        "title": "Judul Foto Kenangan",
-        "date": "June 2018",
-        "caption": "Tuliskan cerita singkat atau kesan di balik foto ini.",
-        "location": "",
-        "imageUrl": "./videos/WhatsApp_Video_2026-10-13_at_13.48.36__1_.mp4",
-        "mediaType": "video"
       }
     ],
     "wish": {
       "themeTitle": "Garis Start Sebuah Cerita",
-      "authorNote": "Ditulis dengan penuh kehangatan",
-      "shortWish": "Tahun di mana namamu mulai menjadi doa yang tak pernah terlewat di setiap malam.",
-      "longWish": "Mengingat tahun 2018 selalu membawa senyum tersendiri. Waktu itu kita masih dua orang asing yang saling menerka isi kepala masing-masing. Sophie, cara bicaramu yang tenang dan matamu yang berbinar saat menceritakan hal-hal kecil adalah alasan pertama mengapa aku tahu, perjalanan ini akan menjadi sesuatu yang sangat berharga. Terima kasih telah mengizinkanku melangkah masuk ke dalam duniamu sejak hari itu."
+      "authorNote": "",
+      "shortWish": "Tahun dimana semua cerita bermula",
+      "longWish": "Berawal dari pertengahan SMA kelas 2 ditahun 2018, kita mulai perjalanan ini. Sayang foto birthday kamu diawal yang ku suprise gada fotonya, tapi berawal dari tahun itu ga ngira bakal jadi perjalanan yang panjang, so letsgo ke tahun depan"
     },
     "miniGame": {
       "type": "quiz",

@@ -952,6 +952,166 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
                   />
                 </div>
 
+                {/* 1. Quiz Questions & Answers Editor */}
+                {(currentYear.miniGame.quizData || currentYear.miniGame.type === 'quiz') && (
+                  <div className="space-y-3 pt-2 border-t border-cream-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-semibold tracking-wider text-rose-hover uppercase">
+                        DAFTAR SOAL & PILIHAN JAWABAN KUIS ({currentYear.miniGame.quizData?.length || 0})
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          updateCurrentYear(y => {
+                            const currentQuiz = y.miniGame.quizData ? [...y.miniGame.quizData] : [];
+                            currentQuiz.push({
+                              question: 'Pertanyaan baru tentang kenangan kita...',
+                              options: [
+                                'Pilihan Jawaban A',
+                                'Pilihan Jawaban B',
+                                'Pilihan Jawaban C',
+                                'Pilihan Jawaban D'
+                              ],
+                              correctIndex: 0,
+                              hint: 'Petunjuk singkat untuk menjawab...'
+                            });
+                            return {
+                              ...y,
+                              miniGame: { ...y.miniGame, quizData: currentQuiz }
+                            };
+                          });
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-cream-50 hover:bg-cream-200 border border-cream-200 text-charcoal text-[11px] font-medium flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <Plus size={12} strokeWidth={1.5} />
+                        <span>Tambah Soal</span>
+                      </button>
+                    </div>
+
+                    {currentYear.miniGame.quizData?.map((qItem, qIdx) => (
+                      <div key={qIdx} className="p-3.5 rounded-xl bg-white border border-cream-200 space-y-2.5 shadow-xs">
+                        {/* Question Header & Delete */}
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-mono font-semibold text-charcoal">
+                            SOAL #{qIdx + 1}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              updateCurrentYear(y => {
+                                const currentQuiz = y.miniGame.quizData?.filter((_, idx) => idx !== qIdx);
+                                return {
+                                  ...y,
+                                  miniGame: { ...y.miniGame, quizData: currentQuiz }
+                                };
+                              });
+                            }}
+                            className="text-rose-hover hover:text-rose-700 p-0.5 cursor-pointer transition-colors"
+                            title="Hapus soal ini"
+                          >
+                            <Trash2 size={13} strokeWidth={1.5} />
+                          </button>
+                        </div>
+
+                        {/* Question Text */}
+                        <div>
+                          <label className="text-[10px] text-charcoal-muted block mb-0.5">Teks Pertanyaan</label>
+                          <textarea
+                            value={qItem.question}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => {
+                                const currentQuiz = [...(y.miniGame.quizData || [])];
+                                currentQuiz[qIdx] = { ...currentQuiz[qIdx], question: val };
+                                return { ...y, miniGame: { ...y.miniGame, quizData: currentQuiz } };
+                              });
+                            }}
+                            rows={2}
+                            placeholder="Tuliskan pertanyaan kenangan..."
+                            className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs leading-relaxed"
+                          />
+                        </div>
+
+                        {/* Answer Options A, B, C, D */}
+                        <div className="space-y-1.5">
+                          <label className="text-[10px] text-charcoal-muted block">
+                            Pilihan Jawaban (Klik huruf A/B/C/D untuk menentukan Kunci Jawaban Benar)
+                          </label>
+                          {qItem.options.map((opt, optIdx) => {
+                            const isCorrect = qItem.correctIndex === optIdx;
+                            const optionLetters = ['A', 'B', 'C', 'D'];
+                            return (
+                              <div key={optIdx} className="flex items-center gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    updateCurrentYear(y => {
+                                      const currentQuiz = [...(y.miniGame.quizData || [])];
+                                      currentQuiz[qIdx] = { ...currentQuiz[qIdx], correctIndex: optIdx };
+                                      return { ...y, miniGame: { ...y.miniGame, quizData: currentQuiz } };
+                                    });
+                                  }}
+                                  className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-semibold flex-shrink-0 cursor-pointer border transition-all ${
+                                    isCorrect 
+                                      ? 'bg-emerald-600 border-emerald-600 text-white shadow-xs' 
+                                      : 'bg-cream-100 border-cream-200 text-charcoal-muted hover:border-emerald-400'
+                                  }`}
+                                  title={isCorrect ? 'Ini adalah kunci jawaban benar' : 'Klik untuk jadikan kunci jawaban benar'}
+                                >
+                                  {optionLetters[optIdx]}
+                                </button>
+
+                                <input
+                                  type="text"
+                                  value={opt}
+                                  onChange={(e) => {
+                                    const val = e.target.value;
+                                    updateCurrentYear(y => {
+                                      const currentQuiz = [...(y.miniGame.quizData || [])];
+                                      const newOptions = [...currentQuiz[qIdx].options];
+                                      newOptions[optIdx] = val;
+                                      currentQuiz[qIdx] = { ...currentQuiz[qIdx], options: newOptions };
+                                      return { ...y, miniGame: { ...y.miniGame, quizData: currentQuiz } };
+                                    });
+                                  }}
+                                  placeholder={`Pilihan ${optionLetters[optIdx]}`}
+                                  className={`flex-1 px-2.5 py-1 rounded-lg border text-xs ${
+                                    isCorrect ? 'border-emerald-300 bg-emerald-50/50 text-emerald-950 font-medium' : 'border-cream-200 bg-cream-50'
+                                  }`}
+                                />
+                                {isCorrect && (
+                                  <span className="text-[9px] font-mono font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                                    BENAR
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Hint */}
+                        <div>
+                          <label className="text-[10px] text-charcoal-muted block mb-0.5">Petunjuk Jika Salah (Hint)</label>
+                          <input
+                            type="text"
+                            value={qItem.hint}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateCurrentYear(y => {
+                                const currentQuiz = [...(y.miniGame.quizData || [])];
+                                currentQuiz[qIdx] = { ...currentQuiz[qIdx], hint: val };
+                                return { ...y, miniGame: { ...y.miniGame, quizData: currentQuiz } };
+                              });
+                            }}
+                            placeholder="Petunjuk bantuan..."
+                            className="w-full bg-cream-50 px-2.5 py-1.5 rounded-lg border border-cream-200 text-xs"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* If Cipher Code Game */}
                 {currentYear.miniGame.cipherData && (
                   <div className="p-3 rounded-xl bg-white border border-cream-200 space-y-2">

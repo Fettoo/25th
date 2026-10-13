@@ -1,4 +1,3 @@
-import { Howl } from 'howler';
 import { SongTrack } from '../types';
 
 class RomanticSynthEngine {
@@ -70,7 +69,7 @@ class RomanticSynthEngine {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       this.ctx = new AudioCtx();
       this.gainNode = this.ctx.createGain();
-      this.gainNode.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      this.gainNode.gain.setValueAtTime(0.06, this.ctx.currentTime); // 50% volume scale
       this.gainNode.connect(this.ctx.destination);
     }
     if (this.ctx.state === 'suspended') {
@@ -80,7 +79,7 @@ class RomanticSynthEngine {
 
   public setVolume(volume: number) {
     if (this.gainNode && this.ctx) {
-      this.gainNode.gain.setTargetAtTime(volume * 0.12, this.ctx.currentTime, 0.1);
+      this.gainNode.gain.setTargetAtTime(volume * 0.08, this.ctx.currentTime, 0.1);
     }
   }
 
@@ -103,7 +102,6 @@ class RomanticSynthEngine {
       const osc = this.ctx.createOscillator();
       const noteGain = this.ctx.createGain();
       
-      // Warm sine / triangle mix
       osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
       osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
 
@@ -112,7 +110,7 @@ class RomanticSynthEngine {
       const duration = 2.8;
 
       noteGain.gain.setValueAtTime(0, now + noteDelay);
-      noteGain.gain.linearRampToValueAtTime(0.045, now + noteDelay + 0.35);
+      noteGain.gain.linearRampToValueAtTime(0.03, now + noteDelay + 0.35);
       noteGain.gain.exponentialRampToValueAtTime(0.0001, now + noteDelay + duration);
 
       osc.connect(noteGain);
@@ -137,14 +135,15 @@ class RomanticSynthEngine {
 }
 
 class AudioManager {
-  private currentHowl: Howl | null = null;
+  private currentAudio: HTMLAudioElement | null = null;
   private currentTrack: SongTrack | null = null;
   private isPlaying = false;
   private isMuted = false;
-  private volume = 0.7;
+  private volume = 0.5; // Default volume set to 50%
   private listeners: Array<() => void> = [];
   private synthEngine = new RomanticSynthEngine();
   private usingSynth = false;
+  private fadeInterval: number | null = null;
 
   public subscribe(listener: () => void) {
     this.listeners.push(listener);
@@ -167,60 +166,87 @@ class AudioManager {
   }
 
   public async playTrack(track: SongTrack) {
-    if (this.currentTrack?.title === track.title && this.isPlaying) {
+    // If same track is already playing smoothly, do not re-trigger
+    if (this.currentTrack?.audioUrl === track.audioUrl && this.isPlaying && this.currentAudio && !this.currentAudio.paused) {
       return;
     }
 
-    const previousHowl = this.currentHowl;
     this.currentTrack = track;
+    this.isPlaying = true;
 
-    // Fade out previous track
-    if (previousHowl) {
-      previousHowl.fade(previousHowl.volume(), 0, 1000);
-      setTimeout(() => {
-        previousHowl.stop();
-        previousHowl.unload();
-      }, 1000);
-    }
+    // Stop synth if it was running
     this.synthEngine.stop();
 
-    // Attempt to load howler track, fallback to synth on error or missing file
-    try {
-      const howl = new Howl({
-        src: [track.audioUrl],
-        html5: true,
-        volume: 0,
-        loop: true,
-        onload: () => {
-          this.usingSynth = false;
-          if (this.isPlaying) {
-            howl.play();
-            howl.fade(0, this.isMuted ? 0 : this.volume, 1200);
-          }
-          this.notify();
-        },
-        onloaderror: () => {
-          // Fallback to warm synth ambient
-          this.usingSynth = true;
-          if (this.isPlaying) {
-            this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
-            this.synthEngine.playTheme(track.synthTheme);
-          }
-          this.notify();
+    // Cleanly fade out and dispose old audio element
+    if (this.currentAudio) {
+      const oldAudio = this.currentAudio;
+      this.fadeOutAndStop(oldAudio);
+      this.currentAudio = null;
+    }
+
+    // Create new HTML5 Audio
+    const audio = new Audio();
+    audio.src = track.audioUrl;
+    audio.loop = true;
+    audio.volume = this.isMuted ? 0 : this.volume;
+    audio.preload = 'auto';
+
+    audio.oncanplay = () => {
+      if (this.currentAudio === audio && this.isPlaying) {
+        this.usingSynth = false;
+        audio.play().catch(() => {
+          // Autoplay policy restriction fallback
+        });
+        this.notify();
+      }
+    };
+
+    audio.onerror = () => {
+      // Audio file missing or invalid URL -> fallback to ambient harmonic synth
+      if (this.currentAudio === audio) {
+        this.usingSynth = true;
+        if (this.isPlaying) {
+          this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
+          this.synthEngine.playTheme(track.synthTheme);
         }
+        this.notify();
+      }
+    };
+
+    this.currentAudio = audio;
+    this.usingSynth = false;
+
+    // Start playing
+    audio.play()
+      .then(() => {
+        this.notify();
+      })
+      .catch(() => {
+        // Will play upon next user gesture or error callback
       });
 
-      this.currentHowl = howl;
-      this.isPlaying = true;
-      howl.play();
-      this.notify();
-    } catch {
-      this.usingSynth = true;
-      this.isPlaying = true;
-      this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
-      this.synthEngine.playTheme(track.synthTheme);
-      this.notify();
+    this.notify();
+  }
+
+  private fadeOutAndStop(audio: HTMLAudioElement) {
+    if (this.fadeInterval) {
+      clearInterval(this.fadeInterval);
+      this.fadeInterval = null;
     }
+
+    const step = 0.05;
+    this.fadeInterval = window.setInterval(() => {
+      if (audio.volume > step) {
+        audio.volume = Math.max(0, audio.volume - step);
+      } else {
+        if (this.fadeInterval) {
+          clearInterval(this.fadeInterval);
+          this.fadeInterval = null;
+        }
+        audio.pause();
+        audio.src = '';
+      }
+    }, 50);
   }
 
   public togglePlay() {
@@ -233,13 +259,8 @@ class AudioManager {
 
   public pause() {
     this.isPlaying = false;
-    if (this.currentHowl) {
-      this.currentHowl.fade(this.currentHowl.volume(), 0, 600);
-      setTimeout(() => {
-        if (!this.isPlaying) {
-          this.currentHowl?.pause();
-        }
-      }, 600);
+    if (this.currentAudio) {
+      this.currentAudio.pause();
     }
     this.synthEngine.stop();
     this.notify();
@@ -247,22 +268,31 @@ class AudioManager {
 
   public resume() {
     this.isPlaying = true;
-    if (this.usingSynth || !this.currentHowl) {
+    if (this.usingSynth || !this.currentAudio) {
       if (this.currentTrack) {
         this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
         this.synthEngine.playTheme(this.currentTrack.synthTheme);
       }
-    } else if (this.currentHowl) {
-      this.currentHowl.play();
-      this.currentHowl.fade(0, this.isMuted ? 0 : this.volume, 800);
+    } else if (this.currentAudio) {
+      this.currentAudio.volume = this.isMuted ? 0 : this.volume;
+      this.currentAudio.play().catch(() => {});
     }
     this.notify();
   }
 
   public toggleMute() {
     this.isMuted = !this.isMuted;
-    if (this.currentHowl) {
-      this.currentHowl.mute(this.isMuted);
+    if (this.currentAudio) {
+      this.currentAudio.volume = this.isMuted ? 0 : this.volume;
+    }
+    this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
+    this.notify();
+  }
+
+  public setVolume(newVolume: number) {
+    this.volume = Math.max(0, Math.min(1, newVolume));
+    if (this.currentAudio && !this.isMuted) {
+      this.currentAudio.volume = this.volume;
     }
     this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
     this.notify();
@@ -270,4 +300,3 @@ class AudioManager {
 }
 
 export const audioManager = new AudioManager();
-

@@ -25,6 +25,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [fitMode, setFitMode] = useState<'cover' | 'contain'>('cover');
   const lastPosRef = useRef<{ x: number; y: number } | null>(null);
+  const lastCheckTimeRef = useRef<number>(0);
 
   // Check if media is video
   const isVideo = photo.mediaType === 'video' ||
@@ -201,7 +202,13 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
   const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!isScratching || isCleared) return;
     scratch(e.clientX, e.clientY);
-    checkScratchPercentage();
+    
+    // Throttle heavy getImageData calculation to once every 220ms
+    const now = Date.now();
+    if (now - lastCheckTimeRef.current > 220) {
+      lastCheckTimeRef.current = now;
+      checkScratchPercentage();
+    }
   };
 
   const handlePointerUp = () => {
