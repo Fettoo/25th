@@ -38,3 +38,4 @@ export const ScratchGallery: React.FC<ScratchGalleryProps> = ({ photos, year }) 
     </section>
   );
 };
+

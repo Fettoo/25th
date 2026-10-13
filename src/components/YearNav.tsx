@@ -80,3 +80,4 @@ export const YearNav: React.FC<YearNavProps> = ({
     </nav>
   );
 };
+

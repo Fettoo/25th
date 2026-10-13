@@ -74,3 +74,4 @@ export const WishCard: React.FC<WishCardProps> = ({ wish, year }) => {
     </section>
   );
 };
+

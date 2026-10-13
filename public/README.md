@@ -20,3 +20,4 @@ Sesuai dengan acuan **PRD.md**:
 - Simpan foto kenangan di folder ini jika ingin menggunakan file lokal.
 - Ganti `imageUrl` di `src/data/journalData.ts` menjadi misal `./photos/2018-01.webp`.
 - *Rekomendasi PRD*: Kompresi ke format `.webp` (< 300KB per foto).
+

@@ -51,3 +51,4 @@ export const LockedYearCard: React.FC<LockedYearCardProps> = ({
     </div>
   );
 };
+

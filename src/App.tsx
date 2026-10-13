@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { JOURNAL_DATA } from './data/journalData';
+import { getStoredJournalData } from './data/journalData';
+import { YearData } from './types/index';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { FloatingAudioPlayer } from './components/FloatingAudioPlayer';
 import { YearNav } from './components/YearNav';
@@ -8,15 +9,26 @@ import { WishCard } from './components/WishCard';
 import { MiniGameSection } from './components/MiniGameSection';
 import { LockedYearCard } from './components/LockedYearCard';
 import { FooterCredits } from './components/FooterCredits';
+import { StudioDashboard } from './components/StudioDashboard';
 import { audioManager } from './utils/audioManager';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Sliders } from 'lucide-react';
 
 const STORAGE_KEY = 'sophie_journal_unlocked_years';
 
 export const App: React.FC = () => {
+  const [journalData, setJournalData] = useState<YearData[]>(() => getStoredJournalData());
   const [hasStarted, setHasStarted] = useState(false);
   const [selectedYear, setSelectedYear] = useState(2018);
   const [unlockedYears, setUnlockedYears] = useState<number[]>([2018]);
+  const [isStudioOpen, setIsStudioOpen] = useState(false);
+
+  // Check URL params for auto-open studio (e.g. ?studio=true or ?admin=true)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('studio') === 'true' || params.get('admin') === 'true') {
+      setIsStudioOpen(true);
+    }
+  }, []);
 
   // Load unlocked years from localStorage
   useEffect(() => {
@@ -43,12 +55,12 @@ export const App: React.FC = () => {
     }
   };
 
-  const currentYearData = JOURNAL_DATA.find((y) => y.year === selectedYear) || JOURNAL_DATA[0];
+  const currentYearData = journalData.find((y) => y.year === selectedYear) || journalData[0];
   const isCurrentYearUnlocked = unlockedYears.includes(selectedYear);
 
   // Index of current year in list
-  const currentIdx = JOURNAL_DATA.findIndex((y) => y.year === selectedYear);
-  const nextYearData = currentIdx < JOURNAL_DATA.length - 1 ? JOURNAL_DATA[currentIdx + 1] : undefined;
+  const currentIdx = journalData.findIndex((y) => y.year === selectedYear);
+  const nextYearData = currentIdx < journalData.length - 1 ? journalData[currentIdx + 1] : undefined;
   const isNextYearUnlocked = nextYearData ? unlockedYears.includes(nextYearData.year) : true;
 
   // On Start Journey (Welcome Screen button clicked)
@@ -60,7 +72,7 @@ export const App: React.FC = () => {
   // Change Year Handler
   const handleSelectYear = (year: number) => {
     setSelectedYear(year);
-    const targetData = JOURNAL_DATA.find((y) => y.year === year);
+    const targetData = journalData.find((y) => y.year === year);
     if (targetData && hasStarted) {
       audioManager.playTrack(targetData.song);
     }
@@ -92,9 +104,37 @@ export const App: React.FC = () => {
     }
   };
 
-  // If user hasn't started yet, display the Welcome Screen
-  if (!hasStarted) {
-    return <WelcomeScreen onStart={handleStart} />;
+  // Handle data updated from Studio
+  const handleDataUpdated = (newData: YearData[]) => {
+    setJournalData(newData);
+    const updatedCurrent = newData.find((y) => y.year === selectedYear);
+    if (updatedCurrent && hasStarted) {
+      audioManager.playTrack(updatedCurrent.song);
+    }
+  };
+
+  // If user hasn't started yet and studio is not open, display the Welcome Screen
+  if (!hasStarted && !isStudioOpen) {
+    return (
+      <div className="relative">
+        <WelcomeScreen onStart={handleStart} />
+        {/* Subtle studio button on welcome screen */}
+        <button
+          onClick={() => setIsStudioOpen(true)}
+          className="fixed bottom-4 right-4 z-40 p-2.5 rounded-full bg-cream-100 hover:bg-cream-200 border border-cream-200 text-charcoal-muted shadow-card transition-all cursor-pointer"
+          title="Buka Studio Pengaturan Kenangan"
+          aria-label="Studio Pengaturan"
+        >
+          <Sliders size={15} strokeWidth={1.5} />
+        </button>
+        <StudioDashboard
+          isOpen={isStudioOpen}
+          onClose={() => setIsStudioOpen(false)}
+          journalData={journalData}
+          onDataUpdated={handleDataUpdated}
+        />
+      </div>
+    );
   }
 
   return (
@@ -107,7 +147,7 @@ export const App: React.FC = () => {
 
         {/* Year Navigation Bar */}
         <YearNav
-          years={JOURNAL_DATA}
+          years={journalData}
           selectedYear={selectedYear}
           unlockedYears={unlockedYears}
           onSelectYear={handleSelectYear}
@@ -167,7 +207,7 @@ export const App: React.FC = () => {
             /* Locked Year Notification Card */
             <LockedYearCard
               lockedYear={selectedYear}
-              previousYear={JOURNAL_DATA[Math.max(0, currentIdx - 1)].year}
+              previousYear={journalData[Math.max(0, currentIdx - 1)].year}
               onReturnToYear={handleSelectYear}
             />
           )}
@@ -176,8 +216,17 @@ export const App: React.FC = () => {
         {/* Footer Editorial Credits */}
         <FooterCredits
           onResetProgress={handleResetProgress}
+          onOpenStudio={() => setIsStudioOpen(true)}
           unlockedCount={unlockedYears.length}
-          totalYears={JOURNAL_DATA.length}
+          totalYears={journalData.length}
+        />
+
+        {/* Studio Dashboard Drawer/Modal */}
+        <StudioDashboard
+          isOpen={isStudioOpen}
+          onClose={() => setIsStudioOpen(false)}
+          journalData={journalData}
+          onDataUpdated={handleDataUpdated}
         />
 
       </div>

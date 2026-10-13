@@ -74,3 +74,4 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
     </div>
   );
 };
+

@@ -77,3 +77,4 @@ export interface YearData {
   wish: YearlyWish;
   miniGame: YearMiniGame;
 }
+

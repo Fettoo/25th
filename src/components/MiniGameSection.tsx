@@ -667,3 +667,4 @@ const FinalCelebrationSection: React.FC<FinalCelebrationSectionProps> = ({
     </div>
   );
 };
+

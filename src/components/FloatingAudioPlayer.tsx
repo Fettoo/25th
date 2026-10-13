@@ -108,3 +108,4 @@ export const FloatingAudioPlayer: React.FC<FloatingAudioPlayerProps> = ({ curren
     </header>
   );
 };
+

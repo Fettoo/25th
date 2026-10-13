@@ -285,3 +285,4 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({
     </>
   );
 };
+
