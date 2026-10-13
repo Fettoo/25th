@@ -11,23 +11,43 @@ import { LockedYearCard } from './components/LockedYearCard';
 import { FooterCredits } from './components/FooterCredits';
 import { StudioDashboard } from './components/StudioDashboard';
 import { audioManager } from './utils/audioManager';
-import { Sparkles, Sliders } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 const STORAGE_KEY = 'sophie_journal_unlocked_years';
+
+const checkIsDashboardRoute = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const path = window.location.pathname.toLowerCase();
+  const hash = window.location.hash.toLowerCase();
+  const search = window.location.search.toLowerCase();
+  return (
+    path.endsWith('/dashboard') ||
+    path.endsWith('/dashboard/') ||
+    hash === '#/dashboard' ||
+    hash === '#dashboard' ||
+    search.includes('dashboard=true') ||
+    search.includes('admin=true')
+  );
+};
 
 export const App: React.FC = () => {
   const [journalData, setJournalData] = useState<YearData[]>(() => getStoredJournalData());
   const [hasStarted, setHasStarted] = useState(false);
   const [selectedYear, setSelectedYear] = useState(2018);
   const [unlockedYears, setUnlockedYears] = useState<number[]>([2018]);
-  const [isStudioOpen, setIsStudioOpen] = useState(false);
+  const [isDashboardView, setIsDashboardView] = useState<boolean>(checkIsDashboardRoute);
 
-  // Check URL params for auto-open studio (e.g. ?studio=true or ?admin=true)
+  // Listen to browser navigation changes
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('studio') === 'true' || params.get('admin') === 'true') {
-      setIsStudioOpen(true);
-    }
+    const handleLocationChange = () => {
+      setIsDashboardView(checkIsDashboardRoute());
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
   // Load unlocked years from localStorage
@@ -113,30 +133,32 @@ export const App: React.FC = () => {
     }
   };
 
-  // If user hasn't started yet and studio is not open, display the Welcome Screen
-  if (!hasStarted && !isStudioOpen) {
+  // Close dashboard and return to journal view
+  const handleCloseDashboard = () => {
+    const cleanUrl = window.location.pathname.replace(/\/dashboard\/?$/, '') || './';
+    window.history.pushState(null, '', cleanUrl);
+    setIsDashboardView(false);
+  };
+
+  // 1. DEDICATED DASHBOARD ROUTE (e.g. /dashboard or #/dashboard)
+  if (isDashboardView) {
     return (
-      <div className="relative">
-        <WelcomeScreen onStart={handleStart} />
-        {/* Subtle studio button on welcome screen */}
-        <button
-          onClick={() => setIsStudioOpen(true)}
-          className="fixed bottom-4 right-4 z-40 p-2.5 rounded-full bg-cream-100 hover:bg-cream-200 border border-cream-200 text-charcoal-muted shadow-card transition-all cursor-pointer"
-          title="Buka Studio Pengaturan Kenangan"
-          aria-label="Studio Pengaturan"
-        >
-          <Sliders size={15} strokeWidth={1.5} />
-        </button>
-        <StudioDashboard
-          isOpen={isStudioOpen}
-          onClose={() => setIsStudioOpen(false)}
-          journalData={journalData}
-          onDataUpdated={handleDataUpdated}
-        />
-      </div>
+      <StudioDashboard
+        isOpen={true}
+        isFullPage={true}
+        onClose={handleCloseDashboard}
+        journalData={journalData}
+        onDataUpdated={handleDataUpdated}
+      />
     );
   }
 
+  // 2. PUBLIC WELCOME SCREEN (100% clean, no admin buttons visible)
+  if (!hasStarted) {
+    return <WelcomeScreen onStart={handleStart} />;
+  }
+
+  // 3. PUBLIC JOURNAL VIEW (100% clean, no admin buttons visible)
   return (
     <div className="min-h-dvh bg-cream-50 text-charcoal paper-grain flex flex-col justify-between selection:bg-rose-accent selection:text-white">
       {/* Container Constraints: max-width 480px centered */}
@@ -213,20 +235,11 @@ export const App: React.FC = () => {
           )}
         </main>
 
-        {/* Footer Editorial Credits */}
+        {/* Footer Editorial Credits (Clean, without admin buttons) */}
         <FooterCredits
           onResetProgress={handleResetProgress}
-          onOpenStudio={() => setIsStudioOpen(true)}
           unlockedCount={unlockedYears.length}
           totalYears={journalData.length}
-        />
-
-        {/* Studio Dashboard Drawer/Modal */}
-        <StudioDashboard
-          isOpen={isStudioOpen}
-          onClose={() => setIsStudioOpen(false)}
-          journalData={journalData}
-          onDataUpdated={handleDataUpdated}
         />
 
       </div>

@@ -1,16 +1,14 @@
 import React from 'react';
-import { RotateCcw, Sparkles, Sliders } from 'lucide-react';
+import { RotateCcw, Sparkles } from 'lucide-react';
 
 interface FooterCreditsProps {
   onResetProgress: () => void;
-  onOpenStudio?: () => void;
   unlockedCount: number;
   totalYears: number;
 }
 
 export const FooterCredits: React.FC<FooterCreditsProps> = ({
   onResetProgress,
-  onOpenStudio,
   unlockedCount,
   totalYears,
 }) => {
@@ -41,19 +39,6 @@ export const FooterCredits: React.FC<FooterCreditsProps> = ({
           <span>RESET PROGRES</span>
         </button>
       </div>
-
-      {/* Studio Dashboard Entry Button */}
-      {onOpenStudio && (
-        <div className="mt-4 pt-3 border-t border-cream-200/50 flex justify-center">
-          <button
-            onClick={onOpenStudio}
-            className="px-3.5 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200/70 border border-cream-200 text-charcoal text-[11px] font-medium tracking-wide flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
-          >
-            <Sliders size={12} strokeWidth={1.5} className="text-rose-hover" />
-            <span>STUDIO PENGATURAN KENANGAN</span>
-          </button>
-        </div>
-      )}
 
       <p className="text-[10px] text-charcoal-subtle/70 mt-3 font-mono">
         DIRANCANG UNTUK PWA & GITHUB PAGES • MOBILE-FIRST

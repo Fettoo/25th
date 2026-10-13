@@ -15,7 +15,8 @@ import {
   Pause, 
   CheckCircle2, 
   AlertCircle,
-  FileText
+  FileText,
+  Eye
 } from 'lucide-react';
 import { YearData, MemoryPhoto, SongTrack } from '../types/index';
 import { 
@@ -30,6 +31,7 @@ interface StudioDashboardProps {
   onClose: () => void;
   journalData: YearData[];
   onDataUpdated: (newData: YearData[]) => void;
+  isFullPage?: boolean;
 }
 
 type StudioTab = 'music' | 'photos' | 'wishes' | 'game';
@@ -39,6 +41,7 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
   onClose,
   journalData,
   onDataUpdated,
+  isFullPage = false,
 }) => {
   const [data, setData] = useState<YearData[]>(journalData);
   const [activeYearIndex, setActiveYearIndex] = useState(0);
@@ -223,9 +226,17 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
     setSaveStatus({ message: 'Berkas cadangan JSON berhasil diunduh.', type: 'success' });
   };
 
+  const wrapperClass = isFullPage 
+    ? "min-h-dvh bg-cream-50 paper-grain text-charcoal py-4 px-2 sm:px-4 flex items-center justify-center" 
+    : "fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4";
+
+  const cardClass = isFullPage
+    ? "bg-cream-50 w-full max-w-[640px] min-h-[90dvh] rounded-card shadow-float flex flex-col border border-cream-200 overflow-hidden text-charcoal"
+    : "bg-cream-50 w-full max-w-[560px] max-h-[92dvh] rounded-card shadow-float flex flex-col border border-cream-200 overflow-hidden text-charcoal";
+
   return (
-    <div className="fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
-      <div className="bg-cream-50 w-full max-w-[560px] max-h-[92dvh] rounded-card shadow-float flex flex-col border border-cream-200 overflow-hidden text-charcoal">
+    <div className={wrapperClass}>
+      <div className={cardClass}>
         
         {/* Top Header */}
         <div className="px-5 py-4 border-b border-cream-200 flex items-center justify-between bg-cream-100/70">
@@ -241,16 +252,29 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
             </h2>
           </div>
 
-          <button
-            onClick={() => {
-              if (previewAudio) previewAudio.pause();
-              onClose();
-            }}
-            className="w-8 h-8 rounded-full bg-cream-50 hover:bg-cream-200/60 border border-cream-200 flex items-center justify-center text-charcoal-muted transition-colors cursor-pointer"
-            aria-label="Tutup Studio"
-          >
-            <X size={16} strokeWidth={1.5} />
-          </button>
+          {isFullPage ? (
+            <button
+              onClick={() => {
+                if (previewAudio) previewAudio.pause();
+                onClose();
+              }}
+              className="px-3 py-1.5 rounded-full bg-cream-50 hover:bg-cream-200/60 border border-cream-200 text-charcoal text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Eye size={13} strokeWidth={1.5} />
+              <span>Lihat Jurnal</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                if (previewAudio) previewAudio.pause();
+                onClose();
+              }}
+              className="w-8 h-8 rounded-full bg-cream-50 hover:bg-cream-200/60 border border-cream-200 flex items-center justify-center text-charcoal-muted transition-colors cursor-pointer"
+              aria-label="Tutup Studio"
+            >
+              <X size={16} strokeWidth={1.5} />
+            </button>
+          )}
         </div>
 
         {/* Year Selector Pills */}
@@ -929,3 +953,4 @@ export const StudioDashboard: React.FC<StudioDashboardProps> = ({
     </div>
   );
 };
+
