@@ -69,7 +69,7 @@ class RomanticSynthEngine {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       this.ctx = new AudioCtx();
       this.gainNode = this.ctx.createGain();
-      this.gainNode.gain.setValueAtTime(0.06, this.ctx.currentTime); // 50% volume scale
+      this.gainNode.gain.setValueAtTime(0.04, this.ctx.currentTime); // 50% default volume scale
       this.gainNode.connect(this.ctx.destination);
     }
     if (this.ctx.state === 'suspended') {
@@ -88,6 +88,10 @@ class RomanticSynthEngine {
     this.currentTheme = theme;
     if (this.isPlaying) return;
     this.isPlaying = true;
+    if (this.gainNode && this.ctx) {
+      this.gainNode.gain.cancelScheduledValues(this.ctx.currentTime);
+      this.gainNode.gain.setValueAtTime(0.04, this.ctx.currentTime);
+    }
     this.scheduleNextChord(0);
   }
 
@@ -131,11 +135,17 @@ class RomanticSynthEngine {
       clearTimeout(this.timer);
       this.timer = null;
     }
+    if (this.gainNode && this.ctx) {
+      this.gainNode.gain.cancelScheduledValues(this.ctx.currentTime);
+      this.gainNode.gain.setValueAtTime(0, this.ctx.currentTime);
+    }
   }
 }
 
 class AudioManager {
   private currentAudio: HTMLAudioElement | null = null;
+  private activeAudios: Set<HTMLAudioElement> = new Set();
+  private trackSessionId = 0;
   private currentTrack: SongTrack | null = null;
   private isPlaying = false;
   private isMuted = false;
@@ -143,7 +153,6 @@ class AudioManager {
   private listeners: Array<() => void> = [];
   private synthEngine = new RomanticSynthEngine();
   private usingSynth = false;
-  private fadeInterval: number | null = null;
 
   public subscribe(listener: () => void) {
     this.listeners.push(listener);
@@ -153,7 +162,13 @@ class AudioManager {
   }
 
   private notify() {
-    this.listeners.forEach(l => l());
+    this.listeners.forEach(l => {
+      try {
+        l();
+      } catch {
+        // ignore listener errors
+      }
+    });
   }
 
   public getState() {
@@ -165,34 +180,69 @@ class AudioManager {
     };
   }
 
+  private stopAudioElement(audio: HTMLAudioElement | null) {
+    if (!audio) return;
+    try {
+      audio.oncanplay = null;
+      audio.onerror = null;
+      audio.onended = null;
+      audio.pause();
+      audio.currentTime = 0;
+      audio.removeAttribute('src');
+      audio.load();
+    } catch {
+      // safe fallback
+    }
+  }
+
+  private disposeAllAudios() {
+    this.activeAudios.forEach(audio => {
+      this.stopAudioElement(audio);
+    });
+    this.activeAudios.clear();
+    this.currentAudio = null;
+  }
+
   public async playTrack(track: SongTrack) {
-    // If same track is already playing smoothly, do not re-trigger
-    if (this.currentTrack?.audioUrl === track.audioUrl && this.isPlaying && this.currentAudio && !this.currentAudio.paused) {
+    // If the exact same track is already playing smoothly, do not interrupt
+    if (
+      this.currentTrack?.audioUrl === track.audioUrl &&
+      this.isPlaying &&
+      this.currentAudio &&
+      !this.currentAudio.paused &&
+      !this.currentAudio.ended
+    ) {
       return;
     }
 
+    const sessionId = ++this.trackSessionId;
     this.currentTrack = track;
     this.isPlaying = true;
 
-    // Stop synth if it was running
+    // Immediately stop synth
     this.synthEngine.stop();
 
-    // Cleanly fade out and dispose old audio element
-    if (this.currentAudio) {
-      const oldAudio = this.currentAudio;
-      this.fadeOutAndStop(oldAudio);
-      this.currentAudio = null;
-    }
+    // Synchronously and thoroughly destroy all previous audio elements
+    this.disposeAllAudios();
 
     // Create new HTML5 Audio
     const audio = new Audio();
-    audio.src = track.audioUrl;
+    audio.preload = 'auto';
     audio.loop = true;
     audio.volume = this.isMuted ? 0 : this.volume;
-    audio.preload = 'auto';
+
+    this.activeAudios.add(audio);
+    this.currentAudio = audio;
+    this.usingSynth = false;
 
     audio.oncanplay = () => {
-      if (this.currentAudio === audio && this.isPlaying) {
+      // Obsolete request safeguard
+      if (this.trackSessionId !== sessionId || this.currentAudio !== audio) {
+        this.stopAudioElement(audio);
+        this.activeAudios.delete(audio);
+        return;
+      }
+      if (this.isPlaying) {
         this.usingSynth = false;
         audio.play().catch(() => {
           // Autoplay policy restriction fallback
@@ -202,51 +252,37 @@ class AudioManager {
     };
 
     audio.onerror = () => {
-      // Audio file missing or invalid URL -> fallback to ambient harmonic synth
-      if (this.currentAudio === audio) {
-        this.usingSynth = true;
-        if (this.isPlaying) {
-          this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
-          this.synthEngine.playTheme(track.synthTheme);
-        }
-        this.notify();
+      if (this.trackSessionId !== sessionId || this.currentAudio !== audio) {
+        this.stopAudioElement(audio);
+        this.activeAudios.delete(audio);
+        return;
       }
+      // Audio file missing or invalid URL -> fallback to ambient harmonic synth
+      this.usingSynth = true;
+      if (this.isPlaying) {
+        this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
+        this.synthEngine.playTheme(track.synthTheme);
+      }
+      this.notify();
     };
 
-    this.currentAudio = audio;
-    this.usingSynth = false;
+    audio.src = track.audioUrl;
 
     // Start playing
     audio.play()
       .then(() => {
+        if (this.trackSessionId !== sessionId || this.currentAudio !== audio) {
+          this.stopAudioElement(audio);
+          this.activeAudios.delete(audio);
+          return;
+        }
         this.notify();
       })
       .catch(() => {
-        // Will play upon next user gesture or error callback
+        // Will play upon next user gesture or oncanplay
       });
 
     this.notify();
-  }
-
-  private fadeOutAndStop(audio: HTMLAudioElement) {
-    if (this.fadeInterval) {
-      clearInterval(this.fadeInterval);
-      this.fadeInterval = null;
-    }
-
-    const step = 0.05;
-    this.fadeInterval = window.setInterval(() => {
-      if (audio.volume > step) {
-        audio.volume = Math.max(0, audio.volume - step);
-      } else {
-        if (this.fadeInterval) {
-          clearInterval(this.fadeInterval);
-          this.fadeInterval = null;
-        }
-        audio.pause();
-        audio.src = '';
-      }
-    }, 50);
   }
 
   public togglePlay() {
@@ -259,9 +295,13 @@ class AudioManager {
 
   public pause() {
     this.isPlaying = false;
-    if (this.currentAudio) {
-      this.currentAudio.pause();
-    }
+    this.activeAudios.forEach(audio => {
+      try {
+        audio.pause();
+      } catch {
+        // safe fallback
+      }
+    });
     this.synthEngine.stop();
     this.notify();
   }
@@ -280,21 +320,38 @@ class AudioManager {
     this.notify();
   }
 
+  public stop() {
+    this.isPlaying = false;
+    this.disposeAllAudios();
+    this.synthEngine.stop();
+    this.notify();
+  }
+
   public toggleMute() {
     this.isMuted = !this.isMuted;
-    if (this.currentAudio) {
-      this.currentAudio.volume = this.isMuted ? 0 : this.volume;
-    }
-    this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
+    const targetVol = this.isMuted ? 0 : this.volume;
+    this.activeAudios.forEach(audio => {
+      try {
+        audio.volume = targetVol;
+      } catch {
+        // safe fallback
+      }
+    });
+    this.synthEngine.setVolume(targetVol);
     this.notify();
   }
 
   public setVolume(newVolume: number) {
     this.volume = Math.max(0, Math.min(1, newVolume));
-    if (this.currentAudio && !this.isMuted) {
-      this.currentAudio.volume = this.volume;
-    }
-    this.synthEngine.setVolume(this.isMuted ? 0 : this.volume);
+    const targetVol = this.isMuted ? 0 : this.volume;
+    this.activeAudios.forEach(audio => {
+      try {
+        audio.volume = targetVol;
+      } catch {
+        // safe fallback
+      }
+    });
+    this.synthEngine.setVolume(targetVol);
     this.notify();
   }
 }

@@ -75,6 +75,19 @@ export const App: React.FC = () => {
     }
   };
 
+  // Auto scroll to top on year change or journey start
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
+  useEffect(() => {
+    scrollToTop();
+    const timer = setTimeout(scrollToTop, 20);
+    return () => clearTimeout(timer);
+  }, [selectedYear, hasStarted]);
+
   const currentYearData = journalData.find((y) => y.year === selectedYear) || journalData[0];
   const isCurrentYearUnlocked = unlockedYears.includes(selectedYear);
 
@@ -86,12 +99,14 @@ export const App: React.FC = () => {
   // On Start Journey (Welcome Screen button clicked)
   const handleStart = () => {
     setHasStarted(true);
+    scrollToTop();
     audioManager.playTrack(currentYearData.song);
   };
 
   // Change Year Handler
   const handleSelectYear = (year: number) => {
     setSelectedYear(year);
+    scrollToTop();
     const targetData = journalData.find((y) => y.year === year);
     if (targetData && hasStarted) {
       audioManager.playTrack(targetData.song);
@@ -100,6 +115,7 @@ export const App: React.FC = () => {
 
   const handleLockedClick = (year: number) => {
     setSelectedYear(year);
+    scrollToTop();
   };
 
   // Mini-game unlock trigger
